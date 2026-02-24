@@ -42,15 +42,6 @@ pip install psycopg2-binary
 
 ### 3. Ejecutar el Esquema
 
-```bash
-psql -h localhost -p 5432 -U postgres -d energy_db -f schema_energy.sql
-```
-
-desde PowerShell:
-```powershell
-& "C:\Program Files\PostgreSQL\18\bin\psql.exe" -h localhost -p 5432 -U postgres -d energy_db -f schema_energy.sql
-```
-
 desde PgAdmin:
 ```
 Abre un "query tool" pega y ejecuta energy_model.sql

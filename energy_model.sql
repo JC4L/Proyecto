@@ -1,5 +1,5 @@
 -- =====================================================
--- ESQUEMA DEFINITIVO PARA ENERGÍAS RENOVABLES
+-- ESQUEMA PARA ENERGÍAS RENOVABLES
 -- =====================================================
 
 -- Crear esquema
