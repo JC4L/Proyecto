@@ -58,6 +58,6 @@ server:
 - Creamos controller/EnergyDataController
 
 **probar en postman**
-- GET /api/energy/top?year=2018 <-- por defecto es "Win Generation"
+- GET /api/energy/top?year=2018 <-- por defecto es "Wind Generation"
 - GET /api/energy/top?year=2018&energyType=Wind Generation
 - GET /api/energy/top?year=2020&energyType=Wind Generation&limit=5
