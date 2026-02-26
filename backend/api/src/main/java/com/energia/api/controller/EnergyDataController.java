@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.energia.api.dto.TopEnergyYearDTO;
+import com.energia.api.dto.TotalProductionEnergyDTO;
 import com.energia.api.service.EnergyDataService;
 
 @RestController
@@ -28,4 +29,14 @@ public class EnergyDataController {
 
     return service.getTopEnergy(energyType, year, limit);
   }
+  // Método para mostrar el total por tipo de energía y año especifico
+  @GetMapping("/total")
+  public List<TotalProductionEnergyDTO> getTotalProductionEnergy(
+    @RequestParam String energyType,
+    @RequestParam Integer year,
+    @RequestParam(defaultValue = "10") Integer limit
+  ) {
+    return service.getTotalEnergy(energyType, year, limit);
+  }
+  
 }
