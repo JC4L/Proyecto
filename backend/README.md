@@ -51,12 +51,23 @@ server:
     include-message: always
 
 ## Paso 3 - Creamos DTO, repository, service y controller para los queries solicitados
-*Solicitud: Los 10 países con mayor producción de energía eólica en un año específico*
-- Creamos el dto/TopEnergyYearDTO
+*1. Solicitud: Producción total de energía renovable por tipo de fuente en un año específico, agrupadas por región*
+*2. Solicitud: Porcentaje de energía renovable en el consumo eléctrico total de cada región*
+- Creamos el dto/TotalProductionEnergyDTO
 - En FactEnergyDataRepository agregamos la petición con JPQL
-- Creamos el service/EnergyDataService
-- Creamos controller/EnergyDataController
+- Creamos el service/EnergyDataService y ahí su método
+- Creamos controller/EnergyDataController y ahí su método
+*(Esto mismo para los demás queries)*
+**probar en postman**
+- GET /api/energy/total?year=2018&energyType=Wind Generation
+- GET /api/energy/total?year=2020&energyType=Wind Generation&limit=5
 
+*3. Solicitud: Tendencia de la capacidad instalada de energía solar a lo largo de los años*
+**probar en postman**
+- GET /api/energy/trend?year=2018&energyType=Installed Solar PV Capacity
+- GET /api/energy/trend?year=2020&energyType=Installed Solar PV Capacity&entityName=China
+
+*4. Solicitud: Los 10 países con mayor producción de energía eólica en un año específico*
 **probar en postman**
 - GET /api/energy/top?year=2018 <-- por defecto es "Wind Generation"
 - GET /api/energy/top?year=2018&energyType=Wind Generation

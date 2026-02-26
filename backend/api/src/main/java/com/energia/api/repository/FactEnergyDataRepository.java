@@ -8,17 +8,64 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.energia.api.dto.TopEnergyYearDTO;
+import com.energia.api.dto.TotalProductionEnergyDTO;
+import com.energia.api.dto.TrendEnergyDTO;
 import com.energia.api.modelo.FactEnergyData;
 
 public interface FactEnergyDataRepository extends JpaRepository<FactEnergyData, Long> {
 
-  // Petición: Los 10 países con mayor producción de energía eólica en un año
-  // específico
+  //1. Petición: Producción total de energía renovable por tipo de fuente en un año específico
+  //agrupada por regiones
+  //2. Petición: Porcentaje de energía renovable en el consumo eléctrico total de cada región
+  @Query("""
+          SELECT new com.energia.api.dto.TotalProductionEnergyDTO(
+              e.name,
+              et.name,
+              et.unit,
+              SUM(f.value)
+          )
+          FROM FactEnergyData f
+          JOIN f.entity e
+          JOIN f.energyType et
+          WHERE f.year = :year
+              AND et.name = :energyType
+              AND e.code IS NULL
+          GROUP BY e.name, et.name, et.unit
+          ORDER BY et.name, SUM(f.value) DESC
+      """)
+  List<TotalProductionEnergyDTO> findTotalProductionByEnergyTypeAndYear(
+      @Param("energyType") String energyType,
+      @Param("year") Integer year,
+      PageRequest pageable);
+
+  //3. Petición: Tendencia de la capacidad instalada de energía solar a lo largo de los años
+  @Query("""
+          SELECT new com.energia.api.dto.TrendEnergyDTO(
+              f.year,
+              et.unit,
+              f.value,
+              e.name
+          )
+          FROM FactEnergyData f
+          JOIN f.energyType et
+          JOIN f.entity e
+          WHERE et.name = :energyType
+              AND e.name = :entityName
+          ORDER BY f.year
+      """)
+  List<TrendEnergyDTO> findTrendByEnergyTypeAndEntity(
+      @Param("energyType") String energyType,
+      @Param("entityName") String entityName,
+      PageRequest pageable);
+
+  // 4. Petición: Los 10 países con mayor producción de energía eólica en un año específico
   @Query("""
           SELECT new com.energia.api.dto.TopEnergyYearDTO(
               e.name,
               e.code,
-              f.value
+              f.value,
+              et.unit,
+              et.name
           )
           FROM FactEnergyData f
           JOIN f.entity e

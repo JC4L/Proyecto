@@ -13,7 +13,7 @@ SELECT
 FROM energy.fact_energy_data ed
 JOIN energy.dim_entities e ON ed.entity_id = e.id
 JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
-WHERE ed.year = 2018 -- AND et.name = 'Biofuel Production' para buscar por tipo
+WHERE ed.year = 2018  AND et.name = 'Wind Generation'
     AND e.code IS NULL  -- Regiones (sin código ISO)
 GROUP BY e.name, et.name, et.unit
 ORDER BY et.name, total_value DESC;
@@ -55,12 +55,13 @@ ORDER BY rs.renewable_pct DESC;
 -- ==============================================================================
 SELECT 
     ed.year,
-    SUM(ed.value) AS total_solar_capacity_gw,
-    COUNT(DISTINCT ed.entity_id) AS countries_count
+	et.unit,
+    ed.value AS total_solar_capacity,
+    enti.name AS country
 FROM energy.fact_energy_data ed
 JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
-WHERE et.name = 'Installed Solar PV Capacity'
-GROUP BY ed.year
+JOIN energy.dim_entities enti on ed.entity_id = enti.id
+WHERE et.name = 'Installed Solar PV Capacity' and enti.name = 'World'
 ORDER BY ed.year;
 
 
