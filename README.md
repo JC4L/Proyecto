@@ -52,6 +52,8 @@ Abre un "query tool" pega y ejecuta energy_model.sql
 
 ### 4. Importar los Datos
 
+Cambiar en el import_data.py tus datos de postgres
+
 ```bash
 python import_data.py
 ```
