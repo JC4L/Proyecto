@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.energia.api.dto.TopEnergyYearDTO;
 import com.energia.api.dto.TotalProductionEnergyDTO;
+import com.energia.api.dto.TrendEnergyDTO;
 import com.energia.api.repository.FactEnergyDataRepository;
 
 @Service
@@ -40,5 +41,16 @@ public class EnergyDataService {
         energyType,
         year,
         PageRequest.of(0, limit));
+  }
+
+  public List<TrendEnergyDTO> getTrendByTypeAndYear(
+    String energyType,
+    String entityName,
+    Integer limit
+  ) {
+    return repository.findTrendByEnergyTypeAndEntity(
+      energyType,
+      entityName,
+      PageRequest.of(0, limit));
   }
 }

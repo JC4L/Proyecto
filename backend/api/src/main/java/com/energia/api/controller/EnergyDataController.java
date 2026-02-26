@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.energia.api.dto.TopEnergyYearDTO;
 import com.energia.api.dto.TotalProductionEnergyDTO;
+import com.energia.api.dto.TrendEnergyDTO;
 import com.energia.api.service.EnergyDataService;
 
 @RestController
@@ -20,6 +21,7 @@ public class EnergyDataController {
   public EnergyDataController(EnergyDataService service) {
     this.service = service;
   }
+
   // Método para mostrar el top de países con más consumo, generación o compartido de energía
   @GetMapping("/top")
   public List<TopEnergyYearDTO> getTopEnergy(
@@ -37,6 +39,15 @@ public class EnergyDataController {
     @RequestParam(defaultValue = "10") Integer limit
   ) {
     return service.getTotalEnergy(energyType, year, limit);
+  }
+  // Método para mostrar la tendencia por tipo de energía y país
+  @GetMapping("/trend")
+  public List<TrendEnergyDTO> getTrendEnergy(
+    @RequestParam String energyType,
+    @RequestParam(defaultValue = "World") String entityName,
+    @RequestParam(defaultValue = "10") Integer limit
+  ) {
+    return service.getTrendByTypeAndYear(energyType, entityName, limit);
   }
   
 }
