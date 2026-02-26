@@ -1,7 +1,6 @@
 # Paso a paso de creación del proyecto energía renovables
 
 **Tecnologías**
-- frontend: Typescript + Angular + TailwindCSS
 - backend: Java + Spring boot
 - database: Postgres
 
@@ -9,20 +8,12 @@
 1. Extension pack for java (microsoft)
 2. Spring Boot Extension (vmware)
 3. Maven for java (microsoft)
-4. Angular Language Service
-5. Tailwind CSS Intelligence
 
 ## Paso 1 - Definir
 - Tipo de aplicación: CRUD con autenticación
 - Arquitectura: Frontend y Backend desacoplados (API REST)
 - Comunicación: JSON sobre HTTP
 - Autenticación: JWT (JSON Web Token)
-
-Estructura general:
-/ proyecto
-├── frontend/
-├── backend/
-└── archivos/
 
 ## Paso 2 - Crear proyecto con Maven
 1. ctrl + shift + p: spring inizialitr

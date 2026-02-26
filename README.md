@@ -10,8 +10,11 @@ energia_renovables/
 │   ├── 01 renewable-share-energy.csv
 │   ├── 02 modern-renewable-energy-consumption.csv
 │   └── ...
-├── schema_energy.sql           # Esquema de la base de datos
+├── backend                     # Api rest
+├── frontend                    # Angular
+├── energy_model.sql            # Esquema de la base de datos
 ├── import_data.py              # Script de importación Python
+├── queries.sql                 # Peticiones solicitadas
 └── README.md                   # Este archivo
 ```
 
