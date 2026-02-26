@@ -19,7 +19,7 @@ public class EnergyDataController {
   public EnergyDataController(EnergyDataService service) {
     this.service = service;
   }
-
+  // Método para mostrar el top de países con más consumo, generación o compartido de energía
   @GetMapping("/top")
   public List<TopEnergyYearDTO> getTopEnergy(
       @RequestParam Integer year,

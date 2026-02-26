@@ -18,7 +18,9 @@ public interface FactEnergyDataRepository extends JpaRepository<FactEnergyData, 
           SELECT new com.energia.api.dto.TopEnergyYearDTO(
               e.name,
               e.code,
-              f.value
+              f.value,
+              et.unit,
+              et.name
           )
           FROM FactEnergyData f
           JOIN f.entity e
