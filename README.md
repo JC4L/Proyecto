@@ -1,66 +1,126 @@
-# Energía Renovable - Modelo de Datos PostgreSQL
+# Base de Datos de Energía Renovable
 
-## Archivos Generados
+Este proyecto contiene un esquema PostgreSQL normalizado para almacenar datos de energía renovable de múltiples archivos CSV.
 
-| Archivo | Descripción |
-|---------|-------------|
-| `energy_model.sql` | Script SQL con el modelo star schema completo |
-| `import_data.py` | Script Python ETL para importar los CSV |
-| `README.md` | Este archivo |
+## Estructura del Proyecto
 
-## Instrucciones de Uso
+```
+energia_renovables/
+├── archivos/                    # 17 archivos CSV originales
+│   ├── 01 renewable-share-energy.csv
+│   ├── 02 modern-renewable-energy-consumption.csv
+│   └── ...
+├── backend                     # Api rest
+├── frontend                    # Angular
+├── energy_model.sql            # Esquema de la base de datos
+├── import_data.py              # Script de importación Python
+├── queries.sql                 # Peticiones solicitadas
+└── README.md                   # Este archivo
+```
+
+## Requisitos
+
+- PostgreSQL 12+
+- Python 3.8+
+- Paquetes Python: `psycopg2`
+
+## Paso a Paso
 
 ### 1. Crear la Base de Datos
 
 ```sql
--- En psql o pgAdmin
 CREATE DATABASE energy_db;
 ```
 
-### 2. Ejecutar el Modelo
-
+O desde terminal:
 ```bash
-psql -U postgres -d energy_db -f energy_model.sql
+createdb energy_db
 ```
 
-### 3. Configurar y Ejecutar la Importación
+### 2. Instalar Dependencias Python
 
 ```bash
-# Editar credenciales en import_data.py
-# DB_CONFIG = {...}
+pip install psycopg2-binary
+```
 
-# Ejecutar importación
-pip install psycopg2-binary pandas
+### 3. Ejecutar el Esquema
+
+desde PgAdmin:
+```
+Abre un "query tool" pega y ejecuta energy_model.sql
+```
+
+### 4. Importar los Datos
+
+```bash
 python import_data.py
 ```
 
+## Modelo de Datos
+
+### Tablas Creadas
+
+| Tabla | Descripción |
+|-------|-------------|
+| `energy.dim_entities` | Países y regiones |
+| `energy.dim_energy_type` | 17 tipos de energía renovable |
+| `energy.fact_energy_data` | Datos de mediciones |
+
+### Tipos de Energía Incluidos
+
+1. Renewable Share Energy (%)
+2. Modern Renewable Energy Consumption (TWh)
+3. Modern Renewable Production (TWh)
+4. Share Electricity Renewables (%)
+5. Hydropower Consumption (TWh)
+6. Hydro Share Energy (%)
+7. Share Electricity Hydro (%)
+8. Wind Generation (TWh)
+9. Cumulative Wind Capacity (GW)
+10. Wind Share Energy (%)
+11. Share Electricity Wind (%)
+12. Solar Energy Consumption (TWh)
+13. Installed Solar PV Capacity (GW)
+14. Solar Share Energy (%)
+15. Share Electricity Solar (%)
+16. Biofuel Production (TWh)
+17. Installed Geothermal Capacity (GW)
+
 ## Consultas de Ejemplo
 
+### Ver todos los datos de un país
 ```sql
--- Ver evolución de energía renovable en España
-SELECT * FROM energy.v_renewable_evolution 
-WHERE code = 'ESP';
-
--- Últimos datos de capacidad solar
-SELECT * FROM energy.v_latest_by_country 
-WHERE energy_type = 'Installed Solar PV Capacity'
-ORDER BY value DESC LIMIT 10;
-
--- Función: Datos por rango de años
-SELECT * FROM energy.get_data_by_year_range(2020, 2023, 'Solar Share Energy');
+SELECT e.name AS entidad, et.name AS tipo_energia, ed.year, ed.value, et.unit
+FROM energy.fact_energy_data ed
+JOIN energy.dim_entities e ON ed.entity_id = e.id
+JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
+WHERE e.name = 'Spain'
+ORDER BY ed.year;
 ```
 
-## Estructura del Modelo
-
+### Evolución de energía renovable por año
+```sql
+SELECT ed.year, AVG(ed.value) AS promedio
+FROM energy.fact_energy_data ed
+JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
+WHERE et.name = 'Renewable Share Energy'
+GROUP BY ed.year
+ORDER BY ed.year;
 ```
-dim_entities ─────┐
-                  ├──▶ fact_energy_data
-dim_energy_type ─┘
+
+### Capacidad solar por país (más reciente)
+```sql
+SELECT e.name, ed.value, et.unit
+FROM energy.fact_energy_data ed
+JOIN energy.dim_entities e ON ed.entity_id = e.id
+JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
+WHERE et.name = 'Installed Solar PV Capacity'
+AND ed.year = (SELECT MAX(year) FROM energy.fact_energy_data 
+               WHERE energy_type_id = et.id AND entity_id = ed.entity_id)
+ORDER BY ed.value DESC
+LIMIT 10;
 ```
 
-## Vistas Disponibles
+## Licencia
 
-- `v_renewable_evolution` - Evolución % renovable por país
-- `v_solar_capacity` - Capacidad solar por país
-- `v_wind_capacity` - Capacidad eólica por país
-- `v_latest_by_country` - Últimos datos por país
+MIT

@@ -1,29 +1,26 @@
-#!/usr/bin/env python3
 """
-Script ETL para importar datos de energía renovable a PostgreSQL
-Requiere: pip install psycopg2-binary pandas
+Script para importar datos de energía renovable desde archivos CSV a PostgreSQL
 """
 
 import os
-import glob
-import pandas as pd
+import csv
 import psycopg2
-from psycopg2 import sql
+from psycopg2.extras import execute_batch
+from pathlib import Path
 
-# =============================================
-# CONFIGURACIÓN - Modificar según sea necesario
-# =============================================
+# ============== CONFIGURACIÓN ==============
 DB_CONFIG = {
     'host': 'localhost',
     'port': 5432,
     'database': 'energy_db',
     'user': 'postgres',
-    'password': '123'
+    'password': 'tu_password'
 }
 
-DATA_DIR = os.path.join(os.path.dirname(__file__), 'archive')
+CSV_DIR = Path(__file__).parent / 'archivos'
 
-MAPPING_FILES = {
+# Mapeo de archivos CSV a tipos de energía
+CSV_MAPPING = {
     '01 renewable-share-energy.csv': 'Renewable Share Energy',
     '02 modern-renewable-energy-consumption.csv': 'Modern Renewable Energy Consumption',
     '03 modern-renewable-prod.csv': 'Modern Renewable Production',
@@ -40,105 +37,156 @@ MAPPING_FILES = {
     '14 solar-share-energy.csv': 'Solar Share Energy',
     '15 share-electricity-solar.csv': 'Share Electricity Solar',
     '16 biofuel-production.csv': 'Biofuel Production',
-    '17 installed-geothermal-capacity.csv': 'Installed Geothermal Capacity'
+    '17 installed-geothermal-capacity.csv': 'Installed Geothermal Capacity',
 }
 
+
 def get_db_connection():
+    """Establecer conexión a la base de datos"""
     return psycopg2.connect(**DB_CONFIG)
 
-def ensure_entities_exist(cursor, entities_df):
-    """Inserta entidades que no existen y retorna mapa de name -> id"""
-    for _, row in entities_df.iterrows():
-        cursor.execute("""
-            INSERT INTO energy.dim_entities (name, code)
-            VALUES (%s, %s)
-            ON CONFLICT (name) DO NOTHING
-        """, (row['Entity'], row.get('Code')))
+
+def load_entities(cursor):
+    """Cargar todas las entidades de los archivos CSV"""
+    entities = {}
     
+    for csv_file in CSV_MAPPING.keys():
+        file_path = CSV_DIR / csv_file
+        if not file_path.exists():
+            print(f"⚠️ Archivo no encontrado: {csv_file}")
+            continue
+            
+        with open(file_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                entity_name = row.get('Entity', '').strip()
+                entity_code = row.get('Code', '').strip()
+                
+                if entity_name and entity_name not in entities:
+                    entities[entity_name] = entity_code
+    
+    # Insertar entidades
+    insert_query = """
+        INSERT INTO energy.dim_entities (name, code)
+        VALUES (%s, %s)
+        ON CONFLICT (name) DO UPDATE SET code = EXCLUDED.code
+        RETURNING id, name
+    """
+    
+    entity_data = [(name, code if code else None) for name, code in entities.items()]
+    execute_batch(cursor, insert_query, entity_data)
+    
+    # Obtener IDs
     cursor.execute("SELECT id, name FROM energy.dim_entities")
     return {row[1]: row[0] for row in cursor.fetchall()}
 
-def get_energy_type_id(cursor, energy_type_name):
-    cursor.execute(
-        "SELECT id FROM energy.dim_energy_type WHERE name = %s",
-        (energy_type_name,)
-    )
-    result = cursor.fetchone()
-    return result[0] if result else None
 
-def import_csv_to_db(filepath, energy_type_name):
-    """Importa un archivo CSV a la base de datos"""
-    conn = get_db_connection()
-    cursor = conn.cursor()
+def load_energy_data(cursor, entity_ids):
+    """Cargar todos los datos de energía"""
     
-    try:
-        df = pd.read_csv(filepath)
+    # Obtener mapeo de tipos de energía
+    cursor.execute("SELECT id, name FROM energy.dim_energy_type")
+    energy_type_ids = {row[1]: row[0] for row in cursor.fetchall()}
+    
+    all_data = []
+    
+    for csv_file, energy_type_name in CSV_MAPPING.items():
+        file_path = CSV_DIR / csv_file
+        energy_type_id = energy_type_ids.get(energy_type_name)
         
-        # Obtener ID del tipo de energía
-        energy_type_id = get_energy_type_id(cursor, energy_type_name)
         if not energy_type_id:
-            print(f"  [WARN] Tipo de energía no encontrado: {energy_type_name}")
-            return 0
+            print(f"⚠️ Tipo de energía no encontrado: {energy_type_name}")
+            continue
         
-        # Asegurar que existen las entidades
-        entity_map = ensure_entities_exist(cursor, df[['Entity', 'Code']].drop_duplicates())
-        conn.commit()
+        print(f"📄 Procesando: {csv_file}")
         
-        # Reconsultar el mapa de entidades
-        cursor.execute("SELECT id, name FROM energy.dim_entities")
-        entity_map = {row[1]: row[0] for row in cursor.fetchall()}
-        
-        # Insertar datos
-        insert_count = 0
-        for _, row in df.iterrows():
-            entity_id = entity_map.get(row['Entity'])
-            if entity_id is None:
-                continue
+        with open(file_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f)
             
-            value = row.iloc[3]  # La columna de valor es la 4ta
-            
-            cursor.execute("""
-                INSERT INTO energy.fact_energy_data 
-                (entity_id, energy_type_id, year, value)
-                VALUES (%s, %s, %s, %s)
-                ON CONFLICT DO NOTHING
-            """, (entity_id, energy_type_id, row['Year'], value))
-            insert_count += 1
-        
-        conn.commit()
-        print(f"  [OK] {os.path.basename(filepath)}: {insert_count} registros insertados")
-        return insert_count
-        
-    except Exception as e:
-        conn.rollback()
-        print(f"  [ERROR] {filepath}: {e}")
-        return 0
-    finally:
-        cursor.close()
-        conn.close()
+            for row in reader:
+                entity_name = row.get('Entity', '').strip()
+                year = row.get('Year', '').strip()
+                
+                # Saltar filas sin año válido
+                if not year or not year.isdigit():
+                    continue
+                
+                entity_id = entity_ids.get(entity_name)
+                if not entity_id:
+                    continue
+                
+                # Obtener el valor (última columna)
+                values = [v for k, v in row.items() if k not in ['Entity', 'Code', 'Year']]
+                if not values:
+                    continue
+                
+                try:
+                    value = float(values[0]) if values[0] else None
+                except (ValueError, TypeError):
+                    value = None
+                
+                if value is not None:
+                    all_data.append((entity_id, energy_type_id, int(year), value))
+    
+    # Insertar datos
+    insert_query = """
+        INSERT INTO energy.fact_energy_data (entity_id, energy_type_id, year, value)
+        VALUES (%s, %s, %s, %s)
+        ON CONFLICT (entity_id, energy_type_id, year) DO UPDATE SET value = EXCLUDED.value
+    """
+    
+    print(f"💾 Insertando {len(all_data)} registros...")
+    execute_batch(cursor, insert_query, all_data, page_size=1000)
+    
+    return len(all_data)
+
 
 def main():
-    print("=" * 60)
-    print("ETL: Importando datos de energía renovable a PostgreSQL")
-    print("=" * 60)
+    """Función principal"""
+    print("=" * 50)
+    print("IMPORTACIÓN DE DATOS DE ENERGÍA RENOVABLE")
+    print("=" * 50)
     
-    csv_files = glob.glob(os.path.join(DATA_DIR, '*.csv'))
-    total_records = 0
-    
-    for filepath in sorted(csv_files):
-        filename = os.path.basename(filepath)
-        energy_type = MAPPING_FILES.get(filename)
+    try:
+        conn = get_db_connection()
+        conn.autocommit = False
+        cursor = conn.cursor()
         
-        if energy_type:
-            print(f"Procesando: {filename}")
-            count = import_csv_to_db(filepath, energy_type)
-            total_records += count
-        else:
-            print(f"[SKIP] Archivo no mapeado: {filename}")
-    
-    print("=" * 60)
-    print(f"Total de registros importados: {total_records}")
-    print("=" * 60)
+        # Paso 1: Cargar entidades
+        print("\n📍 Paso 1: Cargando entidades...")
+        entity_ids = load_entities(cursor)
+        print(f"   ✓ {len(entity_ids)} entidades cargadas/actualizadas")
+        
+        # Paso 2: Cargar datos
+        print("\n📊 Paso 2: Cargando datos de energía...")
+        total_records = load_energy_data(cursor, entity_ids)
+        
+        conn.commit()
+        print(f"\n✅ Importación completada: {total_records} registros")
+        
+        # Mostrar estadísticas
+        cursor.execute("""
+            SELECT 
+                (SELECT COUNT(*) FROM energy.dim_entities) AS entidades,
+                (SELECT COUNT(*) FROM energy.dim_energy_type) AS tipos_energia,
+                (SELECT COUNT(*) FROM energy.fact_energy_data) AS registros
+        """)
+        result = cursor.fetchone()
+        print(f"\n📈 ESTADÍSTICAS FINALES:")
+        print(f"   - Entidades: {result[0]}")
+        print(f"   - Tipos de energía: {result[1]}")
+        print(f"   - Registros totales: {result[2]}")
+        
+        cursor.close()
+        conn.close()
+        
+    except Exception as e:
+        print(f"\n❌ Error: {e}")
+        if 'conn' in locals():
+            conn.rollback()
+            conn.close()
+        raise
+
 
 if __name__ == '__main__':
     main()
