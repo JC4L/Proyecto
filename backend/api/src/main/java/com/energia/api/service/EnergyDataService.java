@@ -19,6 +19,18 @@ public class EnergyDataService {
     this.repository = repository;
   }
 
+  // Peticion 1: Producción total de energía renovable por tipo de fuente en un
+  // año específico, agrupada por regiones
+  public List<TotalProductionEnergyDTO> getTotalEnergy(
+      String energyType,
+      Integer year,
+      Integer limit) {
+    return repository.findTotalProductionByEnergyTypeAndYear(
+        energyType,
+        year,
+        PageRequest.of(0, limit));
+  }
+
   public List<TopEnergyYearDTO> getTopEnergy(
       String energyType,
       Integer year,
@@ -33,24 +45,13 @@ public class EnergyDataService {
         PageRequest.of(0, limit));
   }
 
-  public List<TotalProductionEnergyDTO> getTotalEnergy(
-      String energyType,
-      Integer year,
-      Integer limit) {
-    return repository.findTotalProductionByEnergyTypeAndYear(
-        energyType,
-        year,
-        PageRequest.of(0, limit));
-  }
-
   public List<TrendEnergyDTO> getTrendByTypeAndYear(
-    String energyType,
-    String entityName,
-    Integer limit
-  ) {
+      String energyType,
+      String entityName,
+      Integer limit) {
     return repository.findTrendByEnergyTypeAndEntity(
-      energyType,
-      entityName,
-      PageRequest.of(0, limit));
+        energyType,
+        entityName,
+        PageRequest.of(0, limit));
   }
 }

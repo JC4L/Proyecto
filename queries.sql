@@ -4,10 +4,10 @@
 
 -- 1. Producción total de energía renovable por tipo de fuente en un año específico, agrupada por regiones
 -- ==============================================================================================================
--- Nota: Las entidades sin código ISO son regiones (Africa, Europe, World, etc.)
 SELECT 
     e.name AS region,
     et.name AS energy_type,
+    ed.year,
     et.unit,
     SUM(ed.value) AS total_value
 FROM energy.fact_energy_data ed
@@ -15,7 +15,7 @@ JOIN energy.dim_entities e ON ed.entity_id = e.id
 JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
 WHERE ed.year = 2018  AND et.name = 'Wind Production'
     AND e.code IS NULL  -- Regiones (sin código ISO)
-GROUP BY e.name, et.name, et.unit
+GROUP BY e.name, et.name, ed.year, et.unit
 ORDER BY et.name, total_value DESC;
 
 -- 2. Porcentaje de energía renovable en el consumo eléctrico total de cada región
@@ -27,7 +27,7 @@ SELECT
 FROM energy.fact_energy_data ed
 JOIN energy.dim_entities e ON ed.entity_id = e.id
 JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
-WHERE et.name = 'Share Electricity Renewables'
+WHERE et.name = 'Share Electricity Renewables' AND ed.year = 2021
   AND e.code IS NULL  -- Filtro clave: Al ser nulo, nos aseguramos de traer solo regiones (y no países)
 ORDER BY ed.year DESC, ed.value DESC;
 
@@ -70,9 +70,9 @@ SELECT
 FROM energy.fact_energy_data ed
 JOIN energy.dim_entities e ON ed.entity_id = e.id
 JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
-WHERE e.name = 'World'
+WHERE e.name = 'World' AND ed.year = 2021
   AND et.name IN (
-      'Share Electricity Renewables',
+      'Share Electricity Renewables', -- Porcentaje total
       'Share Electricity Hydro', 
       'Share Electricity Wind', 
       'Share Electricity Solar'

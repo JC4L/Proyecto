@@ -7,24 +7,33 @@ public class TotalProductionEnergyDTO {
   private String energyType;
   private String unit;
   private BigDecimal total;
+  private Integer year;
 
-  public TotalProductionEnergyDTO(String region, String energyType, String unit, BigDecimal total) {
+  public TotalProductionEnergyDTO(String region, String energyType, String unit, BigDecimal total, Integer year) {
     this.region = region;
     this.energyType = energyType;
     this.unit = unit;
     this.total = total;
+    this.year = year;
   }
 
   public String getRegion() {
     return region;
   }
+
   public String getEnergyType() {
     return energyType;
   }
+
   public String getUnit() {
     return unit;
   }
+
   public BigDecimal getTotal() {
     return total;
+  }
+
+  public Integer getYear() {
+    return year;
   }
 }
