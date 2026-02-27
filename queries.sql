@@ -13,7 +13,7 @@ SELECT
 FROM energy.fact_energy_data ed
 JOIN energy.dim_entities e ON ed.entity_id = e.id
 JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
-WHERE ed.year = 2018  AND et.name = 'Wind Generation'
+WHERE ed.year = 2018  AND et.name = 'Wind Production'
     AND e.code IS NULL  -- Regiones (sin código ISO)
 GROUP BY e.name, et.name, et.unit
 ORDER BY et.name, total_value DESC;
