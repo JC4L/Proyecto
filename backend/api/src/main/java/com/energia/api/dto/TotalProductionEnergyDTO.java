@@ -5,11 +5,11 @@ import java.math.BigDecimal;
 public class TotalProductionEnergyDTO {
   private String region;
   private String energyType;
+  private Integer year;
   private String unit;
   private BigDecimal total;
-  private Integer year;
 
-  public TotalProductionEnergyDTO(String region, String energyType, String unit, BigDecimal total, Integer year) {
+  public TotalProductionEnergyDTO(String region, String energyType,Integer year, String unit, BigDecimal total) {
     this.region = region;
     this.energyType = energyType;
     this.unit = unit;

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.energia.api.dto.ParticipationElectricalConsumptionDTO;
+import com.energia.api.dto.PercentElectricalTotalDTO;
 import com.energia.api.dto.TopEnergyYearDTO;
 import com.energia.api.dto.TotalProductionEnergyDTO;
 import com.energia.api.dto.TrendEnergyDTO;
@@ -41,7 +43,24 @@ public interface FactEnergyDataRepository extends JpaRepository<FactEnergyData, 
 
     // 2. Petición: Porcentaje de energía renovable en el consumo eléctrico total de
     // cada región
-
+    @Query("""
+            SELECT new com.energia.api.dto.PercentElectricalTotalDTO(
+                e.name,
+                f.year,
+                et.unit,
+                f.value
+            )
+            FROM FactEnergyData f
+            JOIN f.entity e
+            JOIN f.energyType et
+            WHERE et.name = 'Share Electricity Renewables'
+                AND f.year = :year
+                AND e.code IS NULL
+            """)
+    List<PercentElectricalTotalDTO> findPercentElectricalTotalDTO(
+            @Param("year") Integer year,
+            PageRequest pageable);
+    
     // 3. Petición: Tendencia de la capacidad instalada de energía solar a lo largo
     // de los años
     @Query("""
@@ -86,5 +105,29 @@ public interface FactEnergyDataRepository extends JpaRepository<FactEnergyData, 
             @Param("energyType") String energyType,
             @Param("year") Integer year,
             @Param("excludedCodes") List<String> excludedCodes,
+            PageRequest pageable);
+    
+    // 5. Participación de todas las fuentes de energía en el consumo eléctrico total 
+    // a nivel global
+    @Query("""
+            SELECT new com.energia.api.dto.ParticipationElectricalConsumptionDTO(
+                f.year,
+                et.name,
+                e.name,
+                f.value,
+                et.unit
+            )
+            FROM FactEnergyData f
+            JOIN f.entity e
+            JOIN f.energyType et
+            WHERE e.name = :entityName
+                AND f.year = :year
+                AND et.name IN :energyTypes
+            ORDER BY f.year DESC, f.value DESC
+            """)
+    List<ParticipationElectricalConsumptionDTO> findParticipationElectricalConsumptionDTO(
+            @Param("entityName") String entityName,
+            @Param("year") Integer year,
+            @Param("energyTypes") List<String> energyTypes,
             PageRequest pageable);
 }

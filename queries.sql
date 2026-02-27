@@ -23,12 +23,13 @@ ORDER BY et.name, total_value DESC;
 SELECT 
     e.name AS region,
     ed.year,
+    et.unit,
     ed.value AS percentage_renewable_electricity
 FROM energy.fact_energy_data ed
 JOIN energy.dim_entities e ON ed.entity_id = e.id
 JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
 WHERE et.name = 'Share Electricity Renewables' AND ed.year = 2021
-  AND e.code IS NULL  -- Filtro clave: Al ser nulo, nos aseguramos de traer solo regiones (y no países)
+AND e.code IS NULL  -- Filtro clave: Al ser nulo, nos aseguramos de traer solo regiones (y no países)
 ORDER BY ed.year DESC, ed.value DESC;
 
 -- 3. Tendencia de la capacidad instalada de energía solar a lo largo de los años
@@ -65,18 +66,19 @@ LIMIT 10;
 SELECT 
     ed.year,
     et.name AS energy_source,
+    e.name AS region,
     ed.value AS share_percentage,
     et.unit
 FROM energy.fact_energy_data ed
 JOIN energy.dim_entities e ON ed.entity_id = e.id
 JOIN energy.dim_energy_type et ON ed.energy_type_id = et.id
 WHERE e.name = 'World' AND ed.year = 2021
-  AND et.name IN (
-      'Share Electricity Renewables', -- Porcentaje total
-      'Share Electricity Hydro', 
-      'Share Electricity Wind', 
-      'Share Electricity Solar'
-  )
+    AND et.name IN (
+        'Share Electricity Renewables', -- Porcentaje total
+        'Share Electricity Hydro', 
+        'Share Electricity Wind', 
+        'Share Electricity Solar'
+    )
 ORDER BY ed.year DESC, ed.value DESC;
 
 
