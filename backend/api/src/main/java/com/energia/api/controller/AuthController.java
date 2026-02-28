@@ -1,6 +1,6 @@
 package com.energia.api.controller;
 
-import com.energia.api.dto.LoginRequest;
+import com.energia.api.dto.user.LoginRequest;
 import com.energia.api.modelo.User;
 import com.energia.api.service.UserService;
 import org.springframework.web.bind.annotation.*;

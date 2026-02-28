@@ -76,10 +76,112 @@ server:
 **probar en postman GET**
 - http://localhost:8080/api/energy/participation?year=2019&entityName=World&limit=5
 
-## Paso 4 - Crear modelo User y controlador de autenticación
+## Paso 4 - Crear modelo User y controlador de autenticación con contraseña encriptada
 1. Creamos el model/User con lombok (opcional)
 2. Creamos el repository/UserRepository
 3. Creamos el service/UserService
 4. Creamos el controller/AuthController
-5. Agregamos las dependencias de seguridad en pom.xml (JWT: jason web token)
-6. configuramos el SecurityConfig
+5. configuramos el SecurityConfig
+
+## Paso 5 - Implementación de autenticación con JWT (JSON Web Token)
+
+### ¿Qué es JWT?
+Un token firmado que el servidor entrega al hacer login. El cliente lo envía en cada request para demostrar su identidad, sin necesidad de sesiones en el servidor.
+
+### 5.1 - Dependencias en `pom.xml`
+Agregar las 3 dependencias de JJWT (mismo grupo, versiones coherentes):
+```xml
+<!-- API pública de JJWT -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-api</artifactId>
+    <version>0.11.5</version>
+</dependency>
+<!-- Implementación interna (solo en runtime) -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-impl</artifactId>
+    <version>0.11.5</version>
+    <scope>runtime</scope>
+</dependency>
+<!-- Soporte JSON con Jackson (solo en runtime) -->
+<dependency>
+    <groupId>io.jsonwebtoken</groupId>
+    <artifactId>jjwt-jackson</artifactId>
+    <version>0.11.5</version>
+    <scope>runtime</scope>
+</dependency>
+```
+> ⚠️ No usar `jjwt 0.9.1` (artifact ID diferente, API incompatible con 0.11.x)
+
+### 5.2 - Configuración en `application.yml`
+```yaml
+jwt:
+  secret: una_clave_de_al_menos_32_caracteres_aqui  # mínimo 32 chars para HS256
+  expiration: 86400000  # duración del token en ms (86400000 = 24 horas)
+```
+
+### 5.3 - Archivos creados
+
+**`dto/user/`** — Objetos de transferencia de datos:
+- `RegisterRequest.java` — campos: `username`, `email`, `password`
+- `LoginRequest.java` — campos: `username`, `password`
+- `AuthResponse.java` — campo: `token` (la respuesta al login/registro)
+
+**`security/JwtService.java`** — Lógica de tokens:
+- `generateToken(username)` — crea el JWT firmado con HS256
+- `extractUsername(token)` — lee el username del token
+- `isTokenValid(token, username)` — verifica firma y expiración
+
+**`security/JwtAuthenticationFilter.java`** — Filtro HTTP:
+- Intercepta cada request y busca el header `Authorization: Bearer <token>`
+- Si el token es válido, establece la autenticación en el `SecurityContext`
+
+**`security/CustomUserDetailsService.java`** — Carga usuarios:
+- Implementa `UserDetailsService` de Spring Security
+- Busca el usuario en la BD por `username` para que Spring pueda validar credenciales
+
+**`config/PasswordConfig.java`** — Bean del encoder:
+- Define el `PasswordEncoder` (BCrypt) como bean inyectable en toda la app
+
+### 5.4 - Cambios en `SecurityConfig.java`
+```java
+.sessionManagement(session -> session
+    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // sin sesiones
+.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+```
+- Política `STATELESS`: el servidor no guarda sesiones, cada request es independiente
+- El filtro JWT se ejecuta antes que el filtro de usuario/contraseña estándar
+
+### 5.5 - Probar en Postman
+
+**Registrar usuario** — `POST http://localhost:8080/api/auth/register`
+```json
+{
+  "username": "juan",
+  "email": "juan@mail.com",
+  "password": "12345"
+}
+```
+Respuesta:
+```json
+{ "token": "eyJhbGciOiJIUzI1NiJ9..." }
+```
+
+**Login** — `POST http://localhost:8080/api/auth/login`
+```json
+{
+  "username": "juan",
+  "password": "12345"
+}
+```
+Respuesta:
+```json
+{ "token": "eyJhbGciOiJIUzI1NiJ9..." }
+
+**Usar el token en requests protegidos:**
+En Postman → pestaña **Authorization** → tipo **Bearer Token** → pegar el token recibido.
+O manualmente en el header:
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
+```

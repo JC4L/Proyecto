@@ -1,11 +1,15 @@
 package com.energia.api.service;
 
+import com.energia.api.dto.user.AuthResponse;
+import com.energia.api.dto.user.LoginRequest;
 import com.energia.api.modelo.User;
-import com.energia.api.dto.LoginRequest;
 import com.energia.api.repository.UserRepository;
+import com.energia.api.security.JwtService;
+
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
@@ -15,6 +19,9 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    // para generar el token
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     public ResponseEntity<?> register(User user) {
         // validar que todos los campos sean obligatorios
@@ -38,7 +45,8 @@ public class UserService {
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return ResponseEntity.ok().body("Usuario registrado exitosamente");
+        String token = jwtService.generateToken(user.getUsername());
+        return ResponseEntity.ok().body(new AuthResponse(token));
     }
 
     public ResponseEntity<?> login(LoginRequest request) {
@@ -46,7 +54,8 @@ public class UserService {
         if (maybeUser.isPresent()) {
             User user = maybeUser.get();
             if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-                return ResponseEntity.ok().body("Login successful");
+                String token = jwtService.generateToken(user.getUsername());
+                return ResponseEntity.ok().body(new AuthResponse(token));
             }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
