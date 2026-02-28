@@ -14,7 +14,7 @@ DB_CONFIG = {
     'port': 5432,
     'database': 'energy_db',
     'user': 'postgres',
-    'password': 'tu_password'
+    'password': 'luzenith9424'
 }
 
 CSV_DIR = Path(__file__).parent / 'archivos'
@@ -22,13 +22,13 @@ CSV_DIR = Path(__file__).parent / 'archivos'
 # Mapeo de archivos CSV a tipos de energía
 CSV_MAPPING = {
     '01 renewable-share-energy.csv': 'Renewable Share Energy',
-    '02 modern-renewable-energy-consumption.csv': 'Modern Renewable Energy Consumption',
-    '03 modern-renewable-prod.csv': 'Modern Renewable Production',
+    '02 geo-biomass-consumption.csv': 'Geo Biomass Consumption',
+    '03 wind-consumption.csv': 'Wind Consumption',
     '04 share-electricity-renewables.csv': 'Share Electricity Renewables',
     '05 hydropower-consumption.csv': 'Hydropower Consumption',
     '06 hydro-share-energy.csv': 'Hydro Share Energy',
     '07 share-electricity-hydro.csv': 'Share Electricity Hydro',
-    '08 wind-generation.csv': 'Wind Generation',
+    '08 wind-production.csv': 'Wind Production',
     '09 cumulative-installed-wind-energy-capacity-gigawatts.csv': 'Cumulative Wind Capacity',
     '10 wind-share-energy.csv': 'Wind Share Energy',
     '11 share-electricity-wind.csv': 'Share Electricity Wind',
@@ -38,6 +38,8 @@ CSV_MAPPING = {
     '15 share-electricity-solar.csv': 'Share Electricity Solar',
     '16 biofuel-production.csv': 'Biofuel Production',
     '17 installed-geothermal-capacity.csv': 'Installed Geothermal Capacity',
+    '18 hydro-production.csv': 'Hydro Production',
+    '19 solar-production.csv': 'Solar Production',
 }
 
 

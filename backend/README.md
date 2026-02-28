@@ -52,23 +52,26 @@ server:
 
 ## Paso 3 - Creamos DTO, repository, service y controller para los queries solicitados
 *1. Solicitud: Producción total de energía renovable por tipo de fuente en un año específico, agrupadas por región*
-*2. Solicitud: Porcentaje de energía renovable en el consumo eléctrico total de cada región*
 - Creamos el dto/TotalProductionEnergyDTO
 - En FactEnergyDataRepository agregamos la petición con JPQL
 - Creamos el service/EnergyDataService y ahí su método
 - Creamos controller/EnergyDataController y ahí su método
 *(Esto mismo para los demás queries)*
-**probar en postman**
-- GET /api/energy/total?year=2018&energyType=Wind Generation
-- GET /api/energy/total?year=2020&energyType=Wind Generation&limit=5
+**probar en postman GET**
+- http://localhost:8080/api/energy/total?year=2018&energyType=Wind Production&limit=5
+
+*2. Solicitud: Porcentaje de energía renovable en el consumo eléctrico total de cada región*
+**probar en postman GET**
+- http://localhost:8080/api/energy/percent?year=2018&limit=5
 
 *3. Solicitud: Tendencia de la capacidad instalada de energía solar a lo largo de los años*
-**probar en postman**
-- GET /api/energy/trend?year=2018&energyType=Installed Solar PV Capacity
-- GET /api/energy/trend?year=2020&energyType=Installed Solar PV Capacity&entityName=China
+**probar en postman GET**
+- http://localhost:8080/api/energy/trend?energyType=Installed Solar PV Capacity&entityName=China&limit=5
 
 *4. Solicitud: Los 10 países con mayor producción de energía eólica en un año específico*
-**probar en postman**
-- GET /api/energy/top?year=2018 <-- por defecto es "Wind Generation"
-- GET /api/energy/top?year=2018&energyType=Wind Generation
-- GET /api/energy/top?year=2020&energyType=Wind Generation&limit=5
+**probar en postman GET**
+- http://localhost:8080/api/energy/top?year=2019&energyType=Hydro Production&limit=10
+
+*5. Solicitud: Participación de todas las fuentes de energía en el consumo eléctrico total a nivel global*
+**probar en postman GET**
+- http://localhost:8080/api/energy/participation?year=2019&entityName=World&limit=5
