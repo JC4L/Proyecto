@@ -2,6 +2,7 @@ package com.energia.api.service;
 
 import com.energia.api.dto.user.AuthResponse;
 import com.energia.api.dto.user.LoginRequest;
+import com.energia.api.dto.user.RegisterRequest;
 import com.energia.api.modelo.User;
 import com.energia.api.repository.UserRepository;
 import com.energia.api.security.JwtService;
@@ -9,7 +10,6 @@ import com.energia.api.security.JwtService;
 import org.springframework.stereotype.Service;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import lombok.RequiredArgsConstructor;
 import java.util.Optional;
@@ -20,30 +20,34 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     // para generar el token
-    private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
-    public ResponseEntity<?> register(User user) {
+    public ResponseEntity<?> register(RegisterRequest request) {
         // validar que todos los campos sean obligatorios
-        if (user == null ||
-                user.getUsername() == null ||
-                user.getPassword() == null ||
-                user.getEmail() == null ||
-                user.getUsername().isEmpty() ||
-                user.getPassword().isEmpty() ||
-                user.getEmail().isEmpty()) {
+        if (request == null ||
+                request.getUsername() == null ||
+                request.getPassword() == null ||
+                request.getEmail() == null ||
+                request.getUsername().isEmpty() ||
+                request.getPassword().isEmpty() ||
+                request.getEmail().isEmpty()) {
             return ResponseEntity.badRequest().body("Todos los campos son obligatorios");
         }
         // validar que el usuario no exista
-        if (userRepository.existsByUsername(user.getUsername())) {
+        if (userRepository.existsByUsername(request.getUsername())) {
             return ResponseEntity.badRequest().body("El usuario ya existe");
         }
         // validar que el email no exista
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             return ResponseEntity.badRequest().body("El email ya existe");
         }
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // construir el User desde el DTO y encriptar la contraseña
+        User user = User.builder()
+                .username(request.getUsername())
+                .email(request.getEmail())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .build();
         userRepository.save(user);
         String token = jwtService.generateToken(user.getUsername());
         return ResponseEntity.ok().body(new AuthResponse(token));
