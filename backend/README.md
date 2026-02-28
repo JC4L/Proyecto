@@ -75,3 +75,11 @@ server:
 *5. Solicitud: Participación de todas las fuentes de energía en el consumo eléctrico total a nivel global*
 **probar en postman GET**
 - http://localhost:8080/api/energy/participation?year=2019&entityName=World&limit=5
+
+## Paso 4 - Crear modelo User y controlador de autenticación
+1. Creamos el model/User con lombok (opcional)
+2. Creamos el repository/UserRepository
+3. Creamos el service/UserService
+4. Creamos el controller/AuthController
+5. Agregamos las dependencias de seguridad en pom.xml (JWT: jason web token)
+6. configuramos el SecurityConfig

@@ -15,14 +15,13 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/{id}").permitAll()
-                        .requestMatchers("/api/users").permitAll()
-                        .requestMatchers("/api/users/login").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/energy/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.disable())
@@ -30,4 +29,3 @@ public class SecurityConfig {
         return http.build();
     }
 }
-
