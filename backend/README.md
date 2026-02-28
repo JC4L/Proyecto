@@ -184,4 +184,9 @@ En Postman → pestaña **Authorization** → tipo **Bearer Token** → pegar el
 O manualmente en el header:
 ```
 Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...
-```
+
+### Paso 6 - Agregar validación a los DTOs y controller
+- Usar la depencia validation en pom.xml
+
+### Paso 7 - Crear control de excepciones globales
+- Crear exception/GlobalExceptionHandler.java para manejar las excepciones por validación
