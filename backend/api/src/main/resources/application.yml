@@ -2,10 +2,14 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/energy_db
     username: postgres
-    password: luzenith9424
+    password: 1234
+  security:
+    user:
+      name: admin
+      password: 123
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
