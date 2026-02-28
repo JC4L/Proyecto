@@ -23,6 +23,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/{id}").permitAll()
                         .requestMatchers("/api/users").permitAll()
                         .requestMatchers("/api/users/login").permitAll()
+                        .requestMatchers("/api/energy/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.disable())
                 .httpBasic(basic -> basic.disable());
