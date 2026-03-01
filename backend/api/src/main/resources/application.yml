@@ -3,10 +3,10 @@ spring:
     url: jdbc:postgresql://localhost:5432/energy_db
     username: postgres
     password: luzenith9424
-  security:
-    user:
-      name: admin
-      password: 123
+  # security:
+  #   user:
+  #     name: admin
+  #     password: 123
   jpa:
     hibernate:
       ddl-auto: update
@@ -17,5 +17,9 @@ spring:
 
 server:
   port: 8080
-  error:
-    include-message: always
+  # error:
+  #   include-message: always
+
+jwt:
+  secret: energia_proyecto_secret_key_segura_2024
+  expiration: 86400000
