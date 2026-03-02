@@ -3,6 +3,7 @@ package com.energia.api.service;
 import com.energia.api.dto.user.AuthResponse;
 import com.energia.api.dto.user.LoginRequest;
 import com.energia.api.dto.user.RegisterRequest;
+import com.energia.api.dto.user.UpdateRequestDTO;
 import com.energia.api.modelo.User;
 import com.energia.api.repository.UserRepository;
 import com.energia.api.security.JwtService;
@@ -61,6 +62,47 @@ public class UserService {
                 String token = jwtService.generateToken(user.getUsername());
                 return ResponseEntity.ok().body(new AuthResponse(token));
             }
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+    }
+
+    public ResponseEntity<?> delete(String username) {
+        Optional<User> maybeUser = userRepository.findByUsername(username);
+        if (maybeUser.isPresent()) {
+            User user = maybeUser.get();
+            userRepository.delete(user);
+            return ResponseEntity.ok().body("Usuario eliminado correctamente");
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+    }
+
+    public ResponseEntity<?> update(String username, UpdateRequestDTO request) {
+        Optional<User> maybeUser = userRepository.findByUsername(username);
+        Boolean needToken = false;
+        if (maybeUser.isPresent() && passwordEncoder.matches(request.getPassword(), maybeUser.get().getPassword())) {
+            User user = maybeUser.get();
+            if (request.getNewUsername() != null && !request.getNewUsername().isEmpty()) {
+                if (userRepository.existsByUsername(request.getNewUsername())) {
+                    return ResponseEntity.badRequest().body("El nombre de usuario ya existe");
+                }
+                user.setUsername(request.getNewUsername());
+                needToken = true;
+            }
+            if (request.getNewEmail() != null && !request.getNewEmail().isEmpty()) {
+                if (userRepository.existsByEmail(request.getNewEmail())) {
+                    return ResponseEntity.badRequest().body("El email ya existe");
+                }
+                user.setEmail(request.getNewEmail());
+            }
+            if (request.getNewPassword() != null) {
+                user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            }
+            userRepository.save(user);
+            if (needToken) {
+                String token = jwtService.generateToken(user.getUsername());
+                return ResponseEntity.ok().body(new AuthResponse(token));
+            }
+            return ResponseEntity.ok().body("Usuario actualizado correctamente");
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
     }
