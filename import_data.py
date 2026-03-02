@@ -14,7 +14,7 @@ DB_CONFIG = {
     'port': 5432,
     'database': 'energy_db',
     'user': 'postgres',
-    'password': 'tu_password'
+    'password': '123'
 }
 
 CSV_DIR = Path(__file__).parent / 'archivos'
