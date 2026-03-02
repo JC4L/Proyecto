@@ -33,22 +33,24 @@ CREATE UNIQUE INDEX idx_energy_type_name ON energy.dim_energy_type(name);
 -- Carga inicial de tipos de energía
 INSERT INTO energy.dim_energy_type (name, unit, category, description) VALUES
     ('Renewable Share Energy', '%', 'General', 'Porcentaje de energía renovable sobre energía primaria equivalente'),
-    ('Modern Renewable Energy Consumption', 'TWh', 'Modern Renewable', 'Consumo de energía renovable moderna'),
-    ('Modern Renewable Production', 'TWh', 'Modern Renewable', 'Producción de energía renovable moderna'),
+    ('Geo Biomass Consumption', 'TWh', 'Consumption', 'Consumo de energía geo biomass'),
+    ('Wind Consumption', 'TWh', 'Consumption', 'consumo de energía eólica'),
     ('Share Electricity Renewables', '%', 'Electricity', 'Porcentaje de electricidad renovable'),
-    ('Hydropower Consumption', 'TWh', 'Hydro', 'Consumo de energía hidroeléctrica'),
+    ('Hydropower Consumption', 'TWh', 'Consumption', 'Consumo de energía hidroeléctrica'),
     ('Hydro Share Energy', '%', 'Hydro', 'Porcentaje de energía hidroeléctrica'),
     ('Share Electricity Hydro', '%', 'Hydro', 'Porcentaje de electricidad hidroeléctrica'),
-    ('Wind Generation', 'TWh', 'Wind', 'Generación de energía eólica'),
+    ('Wind Production', 'TWh', 'Production', 'Generación de energía eólica'),
     ('Cumulative Wind Capacity', 'GW', 'Wind', 'Capacidad instalada acumulada de energía eólica'),
     ('Wind Share Energy', '%', 'Wind', 'Porcentaje de energía eólica'),
     ('Share Electricity Wind', '%', 'Wind', 'Porcentaje de electricidad eólica'),
-    ('Solar Energy Consumption', 'TWh', 'Solar', 'Consumo de energía solar'),
+    ('Solar Energy Consumption', 'TWh', 'Consumption', 'Consumo de energía solar'),
     ('Installed Solar PV Capacity', 'GW', 'Solar', 'Capacidad instalada solar fotovoltaica'),
     ('Solar Share Energy', '%', 'Solar', 'Porcentaje de energía solar'),
     ('Share Electricity Solar', '%', 'Solar', 'Porcentaje de electricidad solar'),
-    ('Biofuel Production', 'TWh', 'Biofuel', 'Producción de biocombustibles'),
-    ('Installed Geothermal Capacity', 'GW', 'Geothermal', 'Capacidad instalada geotérmica')
+    ('Biofuel Production', 'TWh', 'Production', 'Producción de biocombustibles'),
+    ('Installed Geothermal Capacity', 'GW', 'Geothermal', 'Capacidad instalada geotérmica'),
+    ('Hydro Production', 'TWh', 'Production', 'Producción de energía hidraúlica'),
+    ('Solar Production', 'TWh', 'Production', 'Producción de energía solar')
 ON CONFLICT (name) DO NOTHING;
 
 -- =============================================
