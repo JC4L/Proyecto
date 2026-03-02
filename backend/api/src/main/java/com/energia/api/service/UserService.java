@@ -45,7 +45,7 @@ public class UserService {
 
         // construir el User desde el DTO y encriptar la contraseña
         User user = User.builder()
-                .username(request.getUsername())
+                .username(request.getUsername().trim().toLowerCase())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
@@ -55,7 +55,7 @@ public class UserService {
     }
 
     public ResponseEntity<?> login(LoginRequest request) {
-        Optional<User> maybeUser = userRepository.findByUsername(request.getUsername());
+        Optional<User> maybeUser = userRepository.findByUsername(request.getUsername().trim().toLowerCase());
         if (maybeUser.isPresent()) {
             User user = maybeUser.get();
             if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
@@ -82,10 +82,10 @@ public class UserService {
         if (maybeUser.isPresent() && passwordEncoder.matches(request.getPassword(), maybeUser.get().getPassword())) {
             User user = maybeUser.get();
             if (request.getNewUsername() != null && !request.getNewUsername().isEmpty()) {
-                if (userRepository.existsByUsername(request.getNewUsername())) {
+                if (userRepository.existsByUsername(request.getNewUsername().trim().toLowerCase())) {
                     return ResponseEntity.badRequest().body("El nombre de usuario ya existe");
                 }
-                user.setUsername(request.getNewUsername());
+                user.setUsername(request.getNewUsername().trim().toLowerCase());
                 needToken = true;
             }
             if (request.getNewEmail() != null && !request.getNewEmail().isEmpty()) {
