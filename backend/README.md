@@ -85,10 +85,10 @@ server:
 
 ## Paso 5 - Implementación de autenticación con JWT (JSON Web Token)
 
-### ¿Qué es JWT?
+**¿Qué es JWT?**
 Un token firmado que el servidor entrega al hacer login. El cliente lo envía en cada request para demostrar su identidad, sin necesidad de sesiones en el servidor.
 
-### 5.1 - Dependencias en `pom.xml`
+**5.1 - Dependencias en `pom.xml`**
 Agregar las 3 dependencias de JJWT (mismo grupo, versiones coherentes):
 ```xml
 <!-- API pública de JJWT -->
@@ -114,14 +114,14 @@ Agregar las 3 dependencias de JJWT (mismo grupo, versiones coherentes):
 ```
 > ⚠️ No usar `jjwt 0.9.1` (artifact ID diferente, API incompatible con 0.11.x)
 
-### 5.2 - Configuración en `application.yml`
+**5.2 - Configuración en `application.yml`**
 ```yaml
 jwt:
   secret: una_clave_de_al_menos_32_caracteres_aqui  # mínimo 32 chars para HS256
   expiration: 86400000  # duración del token en ms (86400000 = 24 horas)
 ```
 
-### 5.3 - Archivos creados
+**5.3 - Archivos creados**
 
 **`dto/user/`** — Objetos de transferencia de datos:
 - `RegisterRequest.java` — campos: `username`, `email`, `password`
@@ -144,7 +144,7 @@ jwt:
 **`config/PasswordConfig.java`** — Bean del encoder:
 - Define el `PasswordEncoder` (BCrypt) como bean inyectable en toda la app
 
-### 5.4 - Cambios en `SecurityConfig.java`
+**5.4 - Cambios en `SecurityConfig.java`**
 ```java
 .sessionManagement(session -> session
     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // sin sesiones
@@ -153,7 +153,7 @@ jwt:
 - Política `STATELESS`: el servidor no guarda sesiones, cada request es independiente
 - El filtro JWT se ejecuta antes que el filtro de usuario/contraseña estándar
 
-### 5.5 - Probar en Postman
+**5.5 - Probar en Postman**
 
 **Registrar usuario** — `POST http://localhost:8080/api/auth/register`
 ```json
