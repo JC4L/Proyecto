@@ -27,33 +27,37 @@ public class EnergyDataController {
   // Peticion 1: Mostrar el total por tipo de energía y año especifico
   @GetMapping("/total")
   public List<TotalProductionEnergyDTO> getTotalProductionEnergy(
-      @RequestParam String energyType,
-      @RequestParam Integer year,
-      @RequestParam(defaultValue = "10") Integer limit) {
+      @RequestParam("energyType") String energyType,
+      @RequestParam("year") Integer year,
+      @RequestParam(name = "limit", defaultValue = "10") Integer limit) {
     return service.getTotalEnergy(energyType, year, limit);
   }
+
   // Petición 2: Porcentaje de energía electrica renovable
   @GetMapping("/percent")
   public List<PercentElectricalTotalDTO> getPercentElectricalTotal(
-      @RequestParam Integer year,
-      @RequestParam(defaultValue = "10") Integer limit) {
+      @RequestParam("year") Integer year,
+      @RequestParam(name = "limit", defaultValue = "10") Integer limit) {
     return service.getPercentElectricalTotal(year, limit);
   }
-    // Petición 3: Método para mostrar la tendencia por tipo de energía y país
+
+  // Petición 3: Método para mostrar la tendencia por tipo de energía y país
   @GetMapping("/trend")
   public List<TrendEnergyDTO> getTrendEnergy(
-      @RequestParam String energyType,
-      @RequestParam(defaultValue = "World") String entityName,
-      @RequestParam(defaultValue = "10") Integer limit) {
+      @RequestParam(name = "energyType") String energyType,
+      @RequestParam(name = "entityName", defaultValue = "World") String entityName,
+      @RequestParam(name = "limit", defaultValue = "10") Integer limit) {
     return service.getTrendByTypeAndYear(energyType, entityName, limit);
   }
-  // Petición 4: Método para mostrar el top de países con más consumo, generación o compartido
+
+  // Petición 4: Método para mostrar el top de países con más consumo, generación
+  // o compartido
   // de energía
   @GetMapping("/top")
   public List<TopEnergyYearDTO> getTopEnergy(
-      @RequestParam Integer year,
-      @RequestParam(defaultValue = "Wind Generation") String energyType,
-      @RequestParam(defaultValue = "10") Integer limit) {
+      @RequestParam(name = "year") Integer year,
+      @RequestParam(name = "energyType", defaultValue = "Wind Generation") String energyType,
+      @RequestParam(name = "limit", defaultValue = "10") Integer limit) {
 
     return service.getTopEnergy(energyType, year, limit);
   }
@@ -61,11 +65,11 @@ public class EnergyDataController {
   // Petición 5: participación global de fuentes energéticas en electricidad
   @GetMapping("/participation")
   public List<ParticipationElectricalConsumptionDTO> getParticipation(
-      @RequestParam(defaultValue = "World") String entityName,
-      @RequestParam Integer year,
-      @RequestParam(defaultValue = "10") Integer limit) {
+      @RequestParam(name = "entityName", defaultValue = "World") String entityName,
+      @RequestParam(name = "year") Integer year,
+      @RequestParam(name = "limit", defaultValue = "10") Integer limit) {
 
-      List<String> energyTypes = List.of(
+    List<String> energyTypes = List.of(
         "Share Electricity Renewables",
         "Share Electricity Hydro",
         "Share Electricity Wind",

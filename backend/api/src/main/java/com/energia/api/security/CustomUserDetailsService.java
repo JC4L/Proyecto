@@ -3,6 +3,8 @@ package com.energia.api.security;
 import com.energia.api.modelo.User;
 import com.energia.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     return new org.springframework.security.core.userdetails.User(
         user.getUsername(),
         user.getPassword(),
-        List.of() // sin roles por ahora
+        List.of(new SimpleGrantedAuthority("USER")) // sin roles por ahora
     );
   }
 }

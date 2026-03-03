@@ -2,9 +2,11 @@ package com.energia.api.controller;
 
 import com.energia.api.dto.user.LoginRequest;
 import com.energia.api.dto.user.RegisterRequest;
+import com.energia.api.dto.user.UpdateRequestDTO;
 import com.energia.api.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
 
 @RestController
@@ -24,5 +26,15 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
         return userService.login(request);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> delete(Authentication authentication) {
+        return userService.delete(authentication.getName());
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(Authentication authentication, @Valid @RequestBody UpdateRequestDTO request) {
+        return userService.update(authentication.getName(), request);
     }
 }
