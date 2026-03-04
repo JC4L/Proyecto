@@ -1,6 +1,7 @@
 package com.energia.api.service;
 
 import com.energia.api.dto.user.AuthResponse;
+import com.energia.api.dto.user.DeleteRequest;
 import com.energia.api.dto.user.LoginRequest;
 import com.energia.api.dto.user.MessageResponse;
 import com.energia.api.dto.user.RegisterRequest;
@@ -67,12 +68,14 @@ public class UserService {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Credenciales inválidas"));
     }
 
-    public ResponseEntity<?> delete(String username) {
+    public ResponseEntity<?> delete(String username, DeleteRequest request) {
         Optional<User> maybeUser = userRepository.findByUsername(username);
         if (maybeUser.isPresent()) {
             User user = maybeUser.get();
-            userRepository.delete(user);
-            return ResponseEntity.ok().body(new MessageResponse("Usuario eliminado correctamente"));
+            if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+                userRepository.delete(user);
+                return ResponseEntity.ok().body(new MessageResponse("Usuario eliminado correctamente"));
+            }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Credenciales inválidas"));
     }
