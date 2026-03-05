@@ -6,10 +6,10 @@ import { AuthService } from '../../../core/services/auth.service';
 import { RegisterRequest } from '../../../core/models/auth.models';
 
 @Component({
-    selector: 'app-register',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ReactiveFormsModule, RouterLink],
-    template: `
+  selector: 'app-register',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ReactiveFormsModule, RouterLink],
+  template: `
     <div class="relative flex min-h-screen w-full overflow-hidden">
       <!-- Left Side: Visual Inspiration -->
       <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/10">
@@ -180,45 +180,45 @@ import { RegisterRequest } from '../../../core/models/auth.models';
   `,
 })
 export class RegisterComponent {
-    private readonly fb = inject(FormBuilder);
-    private readonly authService = inject(AuthService);
-    private readonly router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
-    readonly showPassword = signal(false);
-    readonly isLoading = signal(false);
-    readonly errorMessage = signal<string>('');
+  readonly showPassword = signal(false);
+  readonly isLoading = signal(false);
+  readonly errorMessage = signal<string>('');
 
-    readonly registerForm = this.fb.nonNullable.group({
-        username: ['', [Validators.required, Validators.minLength(3)]],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
+  readonly registerForm = this.fb.nonNullable.group({
+    username: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
+  });
+
+  togglePassword(): void {
+    this.showPassword.update((v) => !v);
+  }
+
+  onSubmit(): void {
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
+
+    this.isLoading.set(true);
+    this.errorMessage.set('');
+
+    const data: RegisterRequest = this.registerForm.getRawValue();
+    this.authService.register(data).subscribe({
+      next: () => {
+        this.isLoading.set(false);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.isLoading.set(false);
+        this.errorMessage.set(
+          err.error?.message || err.error || 'Error al registrar. Intente nuevamente.'
+        );
+      },
     });
-
-    togglePassword(): void {
-        this.showPassword.update((v) => !v);
-    }
-
-    onSubmit(): void {
-        if (this.registerForm.invalid) {
-            this.registerForm.markAllAsTouched();
-            return;
-        }
-
-        this.isLoading.set(true);
-        this.errorMessage.set('');
-
-        const data: RegisterRequest = this.registerForm.getRawValue();
-        this.authService.register(data).subscribe({
-            next: () => {
-                this.isLoading.set(false);
-                this.router.navigate(['/dashboard']);
-            },
-            error: (err) => {
-                this.isLoading.set(false);
-                this.errorMessage.set(
-                    err.error?.message || err.error || 'Error al registrar. Intente nuevamente.'
-                );
-            },
-        });
-    }
+  }
 }
