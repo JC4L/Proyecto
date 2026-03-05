@@ -13,14 +13,14 @@ import { LoginRequest } from '../../../core/models/auth.models';
     <div class="relative flex min-h-screen w-full overflow-hidden">
       <!-- Left Side: Visual Inspiration -->
       <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/10">
-        <div class="absolute inset-0 z-10 bg-gradient-to-t from-bg-dark/80 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 z-10 bg-linear-to-t from-bg-dark/80 via-transparent to-transparent"></div>
         <div
           class="absolute inset-0 z-0 bg-cover bg-center"
           style="background-image: url('https://images.unsplash.com/photo-1532601224476-15c79f2f7a51?w=1200&q=80');"
         ></div>
-        <div class="relative z-20 flex flex-col justify-end p-20 w-full">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="p-2 bg-primary rounded-lg text-bg-dark">
+        <div class="relative z-20 flex flex-col justify-end px-20 py-10 w-full">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-2 bg-primary rounded-lg text-bg-dark flex items-center justify-center">
               <span class="material-symbols-outlined text-3xl font-bold">bolt</span>
             </div>
             <h1 class="text-white text-3xl font-bold tracking-tight">EcoEnergy</h1>
@@ -35,18 +35,18 @@ import { LoginRequest } from '../../../core/models/auth.models';
       </div>
 
       <!-- Right Side: Login Form -->
-      <div class="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 py-12 sm:px-12 lg:px-24 bg-white">
-        <div class="w-full max-w-md space-y-8">
+      <div class="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 sm:px-12 lg:px-24 bg-white">
+        <div class="w-full max-w-md space-y-6">
           <!-- Mobile Logo -->
-          <div class="lg:hidden flex items-center gap-3 mb-10">
-            <div class="p-2 bg-primary rounded-lg text-bg-dark">
+          <div class="lg:hidden flex items-center gap-3 mb-4">
+            <div class="p-2 bg-primary rounded-lg text-bg-dark flex items-center justify-center">
               <span class="material-symbols-outlined text-2xl font-bold">bolt</span>
             </div>
             <h1 class="text-slate-900 text-2xl font-bold tracking-tight">EcoEnergy</h1>
           </div>
 
           <!-- Title -->
-          <div class="space-y-2">
+          <div>
             <h2 class="text-3xl font-black text-slate-900 tracking-tight">Acceder a la Plataforma</h2>
             <p class="text-slate-500">Bienvenido de nuevo. Por favor, introduzca sus datos.</p>
           </div>
@@ -54,7 +54,7 @@ import { LoginRequest } from '../../../core/models/auth.models';
           <!-- Tab Toggle -->
           <div class="flex p-1 bg-slate-100 rounded-xl">
             <span
-              class="flex-1 py-2 text-sm font-semibold rounded-lg bg-white shadow-sm text-slate-900 text-center"
+              class="flex-1 py-2 text-sm font-semibold rounded-lg bg-white shadow-sm text-slate-900 text-center pointer-events-none"
             >
               Iniciar Sesión
             </span>
@@ -69,7 +69,7 @@ import { LoginRequest } from '../../../core/models/auth.models';
           <!-- Form -->
           <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
             <!-- Username -->
-            <div class="space-y-2">
+            <div class="space-y-2 relative">
               <label class="block text-sm font-semibold text-slate-700 ml-1" for="username">
                 Nombre de usuario
               </label>
@@ -85,13 +85,16 @@ import { LoginRequest } from '../../../core/models/auth.models';
                   class="block w-full pl-11 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-fast placeholder:text-slate-400 text-slate-900"
                 />
               </div>
-              @if (loginForm.get('username')?.touched && loginForm.get('username')?.errors) {
-                <p class="text-xs text-red-500 font-medium ml-1">El nombre de usuario es obligatorio.</p>
+              @if (loginForm.get('username')?.touched && loginForm.get('username')?.hasError('required')) {
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">El nombre de usuario es obligatorio.</p>
+              }
+              @if (loginForm.get('username')?.touched && loginForm.get('username')?.hasError('minlength')) {
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">Debe tener al menos 3 caracteres.</p>
               }
             </div>
 
             <!-- Password -->
-            <div class="space-y-2">
+            <div class="space-y-2 relative">
               <label class="block text-sm font-semibold text-slate-700 ml-1" for="password">
                 Contraseña
               </label>
@@ -117,8 +120,11 @@ import { LoginRequest } from '../../../core/models/auth.models';
                   </span>
                 </button>
               </div>
-              @if (loginForm.get('password')?.touched && loginForm.get('password')?.errors) {
-                <p class="text-xs text-red-500 font-medium ml-1">La contraseña es obligatoria.</p>
+              @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('required')) {
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">La contraseña es obligatoria.</p>
+              }
+              @if (loginForm.get('password')?.touched && loginForm.get('password')?.hasError('minlength')) {
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">Debe tener al menos 8 caracteres.</p>
               }
             </div>
 
@@ -133,7 +139,7 @@ import { LoginRequest } from '../../../core/models/auth.models';
             <button
               type="submit"
               [disabled]="isLoading()"
-              class="w-full py-4 bg-primary text-bg-dark font-bold rounded-xl hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-smooth flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="w-full py-4 mt-9 bg-primary text-bg-dark font-bold rounded-xl hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-smooth flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:bg-primary/80"
             >
               @if (isLoading()) {
                 <div class="w-5 h-5 border-2 border-bg-dark/30 border-t-bg-dark rounded-full animate-spin"></div>
@@ -144,20 +150,6 @@ import { LoginRequest } from '../../../core/models/auth.models';
               }
             </button>
           </form>
-
-          <!-- Footer Link -->
-          <p class="text-center text-sm text-slate-500 pt-4">
-            ¿No tienes una cuenta todavía?
-            <a routerLink="/auth/register" class="font-bold text-primary hover:underline">Regístrate gratis</a>
-          </p>
-        </div>
-
-        <!-- Bottom Info -->
-        <div class="mt-auto pt-10 text-xs text-slate-400 text-center flex gap-4">
-          <a href="#" class="hover:text-primary transition-fast">Términos de Servicio</a>
-          <a href="#" class="hover:text-primary transition-fast">Política de Privacidad</a>
-          <a href="#" class="hover:text-primary transition-fast">Soporte</a>
-        </div>
       </div>
     </div>
   `,
@@ -172,8 +164,8 @@ export class LoginComponent {
     readonly errorMessage = signal<string>('');
 
     readonly loginForm = this.fb.nonNullable.group({
-        username: ['', [Validators.required]],
-        password: ['', [Validators.required]],
+        username: ['', [Validators.required, Validators.minLength(3)]],
+        password: ['', [Validators.required, Validators.minLength(8)]],
     });
 
     togglePassword(): void {
