@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { forkJoin } from 'rxjs';
 import { EnergyService } from '../../core/services/energy.service';
+import { ThemeService } from '../../core/services/theme.service';
 import {
   TotalProductionEnergy,
   TopEnergyYear,
@@ -88,17 +89,17 @@ interface LineChartOptions {
       <!-- Page Header -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
         <div>
-          <h2 class="text-3xl font-black tracking-tight mb-1 text-slate-900">Panel de Control</h2>
-          <p class="text-slate-500">Resumen global de producción y consumo de energías renovables.</p>
+          <h2 class="text-3xl font-black tracking-tight mb-1 text-slate-900 dark:text-white">Panel de Control</h2>
+          <p class="text-slate-500 dark:text-slate-400">Resumen global de producción y consumo de energías renovables.</p>
         </div>
         <!-- Year Selector -->
         <div class="flex items-center gap-3">
-          <label for="year-select" class="text-sm font-semibold text-slate-600">Año:</label>
+          <label for="year-select" class="text-sm font-semibold text-slate-600 dark:text-slate-300">Año:</label>
           <select
             id="year-select"
             [ngModel]="selectedYear()"
             (ngModelChange)="onYearChange($event)"
-            class="px-4 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-fast cursor-pointer"
+            class="px-4 py-2 bg-white dark:bg-surface-dark border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-800 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none transition-fast cursor-pointer"
           >
             @for (year of availableYears; track year) {
               <option [value]="year">{{ year }}</option>
@@ -116,7 +117,7 @@ interface LineChartOptions {
         <!-- KPI Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <!-- Total Production KPI -->
-          <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-smooth">
+          <div class="bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-smooth animate-fade-in stagger-1">
             <div class="flex justify-between items-start mb-4">
               <div class="p-3 bg-blue-50 rounded-lg text-blue-600">
                 <span class="material-symbols-outlined">bolt</span>
@@ -128,15 +129,15 @@ interface LineChartOptions {
                 </span>
               }
             </div>
-            <p class="text-sm text-slate-500 font-medium">Producción Total (Top 1)</p>
-            <h3 class="text-2xl font-black text-slate-900">
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Producción Total (Top 1)</p>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white">
               {{ kpiTotalProduction() | number:'1.1-1' }} {{ kpiTotalUnit() }}
             </h3>
             <p class="text-xs text-slate-400 mt-1">{{ kpiTotalRegion() }} — {{ selectedYear() }}</p>
           </div>
 
           <!-- Renewable % KPI -->
-          <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-smooth">
+          <div class="bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-smooth animate-fade-in stagger-2">
             <div class="flex justify-between items-start mb-4">
               <div class="p-3 bg-green-50 rounded-lg text-primary">
                 <span class="material-symbols-outlined">eco</span>
@@ -148,15 +149,15 @@ interface LineChartOptions {
                 </span>
               }
             </div>
-            <p class="text-sm text-slate-500 font-medium">Energía Renovable (Top región)</p>
-            <h3 class="text-2xl font-black text-slate-900">
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Energía Renovable (Top región)</p>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white">
               {{ kpiRenewablePercent() | number:'1.1-1' }}%
             </h3>
             <p class="text-xs text-slate-400 mt-1">{{ kpiRenewableRegion() }} — {{ selectedYear() }}</p>
           </div>
 
           <!-- Top Country KPI -->
-          <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 hover:shadow-md transition-smooth">
+          <div class="bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 hover:shadow-md transition-smooth animate-fade-in stagger-3">
             <div class="flex justify-between items-start mb-4">
               <div class="p-3 bg-amber-50 rounded-lg text-amber-600">
                 <span class="material-symbols-outlined">military_tech</span>
@@ -166,8 +167,8 @@ interface LineChartOptions {
                 #1
               </span>
             </div>
-            <p class="text-sm text-slate-500 font-medium">País Líder en Producción</p>
-            <h3 class="text-2xl font-black text-slate-900">{{ kpiTopCountry() }}</h3>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">País Líder en Producción</p>
+            <h3 class="text-2xl font-black text-slate-900 dark:text-white">{{ kpiTopCountry() }}</h3>
             <p class="text-xs text-slate-400 mt-1">
               {{ kpiTopCountryValue() | number:'1.1-1' }} {{ kpiTopCountryUnit() }}
             </p>
@@ -177,7 +178,7 @@ interface LineChartOptions {
         <!-- Charts Row 1: Bar + Donut -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <!-- Top Countries Bar Chart -->
-          <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+          <div class="bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
             @if (barChartOptions()) {
               <apx-chart
                 [series]="barChartOptions()!.series"
@@ -198,7 +199,7 @@ interface LineChartOptions {
           </div>
 
           <!-- Participation Donut Chart -->
-          <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+          <div class="bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
             @if (donutChartOptions()) {
               <apx-chart
                 [series]="donutChartOptions()!.series"
@@ -219,7 +220,7 @@ interface LineChartOptions {
         </div>
 
         <!-- Charts Row 2: Trend Line -->
-        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-6">
+        <div class="bg-white dark:bg-surface-dark p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 mb-6">
           @if (lineChartOptions()) {
             <apx-chart
               [series]="lineChartOptions()!.series"
@@ -251,6 +252,13 @@ interface LineChartOptions {
 })
 export class DashboardComponent implements OnInit {
   private readonly energyService = inject(EnergyService);
+  private readonly themeService = inject(ThemeService);
+
+  // Dark mode chart colors
+  private readonly chartTitleColor = computed(() => this.themeService.darkMode() ? '#FFFFFF' : '#0f172a');
+  private readonly chartTextColor = computed(() => this.themeService.darkMode() ? '#94A3B8' : '#334155');
+  private readonly chartGridColor = computed(() => this.themeService.darkMode() ? '#1e3a2c' : '#f1f5f9');
+  private readonly chartForeColor = computed(() => this.themeService.darkMode() ? '#F1F5F9' : '#373d3f');
 
   // State signals
   readonly isLoading = signal(true);
@@ -304,6 +312,7 @@ export class DashboardComponent implements OnInit {
         type: 'bar',
         height: 350,
         fontFamily: 'Inter, sans-serif',
+        foreColor: this.chartForeColor(),
         toolbar: { show: false },
         animations: {
           enabled: true,
@@ -326,24 +335,25 @@ export class DashboardComponent implements OnInit {
       dataLabels: {
         enabled: true,
         formatter: (val: number) => `${val.toLocaleString()} ${data[0]?.unit ?? ''}`,
-        style: { fontSize: '11px', fontWeight: 600, colors: ['#334155'] },
+        style: { fontSize: '11px', fontWeight: 600, colors: [this.chartTextColor()] },
         offsetX: 8,
       },
       xaxis: {
         categories: data.map((d) => d.country),
-        labels: { style: { fontSize: '12px', fontFamily: 'Inter' } },
+        labels: { style: { fontSize: '12px', fontFamily: 'Inter', colors: this.chartTextColor() } },
       },
       yaxis: {
-        labels: { style: { fontSize: '12px', fontFamily: 'Inter' } },
+        labels: { style: { fontSize: '12px', fontFamily: 'Inter', colors: [this.chartTextColor()] } },
       },
       fill: { opacity: 0.9 },
       tooltip: {
+        theme: this.themeService.darkMode() ? 'dark' : 'light',
         y: { formatter: (val: number) => `${val.toLocaleString()} ${data[0]?.unit ?? ''}` },
       },
-      grid: { borderColor: '#f1f5f9', strokeDashArray: 4 },
+      grid: { borderColor: this.chartGridColor(), strokeDashArray: 4 },
       title: {
         text: `Top Países — ${data[0]?.energyType ?? ''} (${this.selectedYear()})`,
-        style: { fontSize: '16px', fontWeight: '800', fontFamily: 'Inter', color: '#0f172a' },
+        style: { fontSize: '16px', fontWeight: '800', fontFamily: 'Inter', color: this.chartTitleColor() },
       },
     };
   });
@@ -364,6 +374,7 @@ export class DashboardComponent implements OnInit {
         type: 'donut',
         height: 350,
         fontFamily: 'Inter, sans-serif',
+        foreColor: this.chartForeColor(),
         animations: {
           enabled: true,
           easing: 'easeinout',
@@ -377,6 +388,7 @@ export class DashboardComponent implements OnInit {
         fontFamily: 'Inter',
         fontWeight: 500,
         markers: { size: 8, shape: 'circle' },
+        labels: { colors: this.chartTextColor() },
       },
       colors: ['#13ec6d', '#3b82f6', '#f59e0b', '#ef4444'],
       tooltip: {
@@ -393,18 +405,20 @@ export class DashboardComponent implements OnInit {
             size: '60%',
             labels: {
               show: true,
-              name: { show: true, fontSize: '14px', fontFamily: 'Inter' },
+              name: { show: true, fontSize: '14px', fontFamily: 'Inter', color: this.chartTextColor() },
               value: {
                 show: true,
                 fontSize: '20px',
                 fontWeight: '800',
                 fontFamily: 'Inter',
+                color: this.chartTitleColor(),
                 formatter: (val: string) => `${val}%`,
               },
               total: {
                 show: true,
                 label: 'Renovables',
                 fontSize: '13px',
+                color: this.chartTextColor(),
                 fontFamily: 'Inter',
                 formatter: (w: { globals: { seriesTotals: number[] } }) => {
                   const total = w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0);
@@ -423,7 +437,7 @@ export class DashboardComponent implements OnInit {
       ],
       title: {
         text: `Participación Eléctrica — ${data[0]?.entity ?? 'World'} (${this.selectedYear()})`,
-        style: { fontSize: '16px', fontWeight: '800', fontFamily: 'Inter', color: '#0f172a' },
+        style: { fontSize: '16px', fontWeight: '800', fontFamily: 'Inter', color: this.chartTitleColor() },
       },
     };
   });
@@ -445,6 +459,7 @@ export class DashboardComponent implements OnInit {
         type: 'area',
         height: 300,
         fontFamily: 'Inter, sans-serif',
+        foreColor: this.chartForeColor(),
         toolbar: { show: false },
         animations: {
           enabled: true,
@@ -460,11 +475,11 @@ export class DashboardComponent implements OnInit {
       dataLabels: { enabled: false },
       xaxis: {
         categories: sorted.map((d) => d.year.toString()),
-        labels: { style: { fontSize: '12px', fontFamily: 'Inter' } },
+        labels: { style: { fontSize: '12px', fontFamily: 'Inter', colors: this.chartTextColor() } },
       },
       yaxis: {
         labels: {
-          style: { fontSize: '12px', fontFamily: 'Inter' },
+          style: { fontSize: '12px', fontFamily: 'Inter', colors: [this.chartTextColor()] },
           formatter: (val: number) => `${val.toLocaleString()} ${sorted[0]?.unit ?? ''}`,
         },
       },
@@ -478,14 +493,15 @@ export class DashboardComponent implements OnInit {
         },
       },
       tooltip: {
+        theme: this.themeService.darkMode() ? 'dark' : 'light',
         y: {
           formatter: (val: number) => `${val.toLocaleString()} ${sorted[0]?.unit ?? ''}`,
         },
       },
-      grid: { borderColor: '#f1f5f9', strokeDashArray: 4 },
+      grid: { borderColor: this.chartGridColor(), strokeDashArray: 4 },
       title: {
         text: `Tendencia — Capacidad Solar Instalada (${sorted[0]?.country ?? 'World'})`,
-        style: { fontSize: '16px', fontWeight: '800', fontFamily: 'Inter', color: '#0f172a' },
+        style: { fontSize: '16px', fontWeight: '800', fontFamily: 'Inter', color: this.chartTitleColor() },
       },
     };
   });
