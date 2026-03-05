@@ -43,7 +43,7 @@ interface NavItem {
       <!-- Footer -->
       <div class="p-4 border-t border-white/10">
         <a
-          routerLink="/about"
+          routerLink="/about-us"
           class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/50 hover:bg-white/10 hover:text-white transition-smooth"
         >
           <span class="material-symbols-outlined text-[20px]">people</span>

@@ -44,6 +44,11 @@ export const routes: Routes = [
                     import('./features/participation/participation.component').then((m) => m.ParticipationComponent),
             },
             {
+                path: 'about-us',
+                loadComponent: () =>
+                    import('./features/about-us/about-us.component').then((m) => m.AboutUsComponent),
+            },
+            {
                 path: '',
                 redirectTo: 'dashboard',
                 pathMatch: 'full',
