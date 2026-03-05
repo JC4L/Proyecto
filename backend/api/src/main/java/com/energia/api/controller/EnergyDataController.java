@@ -70,7 +70,6 @@ public class EnergyDataController {
       @RequestParam(name = "limit", defaultValue = "10") Integer limit) {
 
     List<String> energyTypes = List.of(
-        "Share Electricity Renewables",
         "Share Electricity Hydro",
         "Share Electricity Wind",
         "Share Electricity Solar");

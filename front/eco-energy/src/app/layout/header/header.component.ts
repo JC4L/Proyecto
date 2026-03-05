@@ -57,8 +57,7 @@ import { ThemeService } from '../../core/services/theme.service';
         <!-- User -->
         <div class="flex items-center gap-3 hidden sm:flex">
           <div class="text-right">
-            <p class="text-xs font-bold text-slate-900 dark:text-slate-100">Usuario</p>
-            <p class="text-[10px] text-slate-500 dark:text-slate-400">Analista</p>
+            <p class="text-xs font-bold text-slate-900 dark:text-slate-100">{{ userKey }}</p>
           </div>
           <div class="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/30">
             <span class="material-symbols-outlined text-primary text-[20px]">person</span>
@@ -81,6 +80,8 @@ import { ThemeService } from '../../core/services/theme.service';
 export class HeaderComponent {
   private readonly authService = inject(AuthService);
   readonly themeService = inject(ThemeService);
+
+  readonly userKey = localStorage.getItem('eco_energy_user');
 
   /** Emits to parent layout via a callback */
   private sidebarToggleFn: (() => void) | null = null;

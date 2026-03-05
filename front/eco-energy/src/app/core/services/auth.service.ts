@@ -11,6 +11,7 @@ export class AuthService {
     private readonly router = inject(Router);
 
     private readonly TOKEN_KEY = 'eco_energy_token';
+    private readonly USER_KEY = 'eco_energy_user';
 
     /** Signal that holds the current JWT token */
     private readonly _token = signal<string | null>(this.getStoredToken());
@@ -22,6 +23,7 @@ export class AuthService {
     readonly token = computed(() => this._token());
 
     login(credentials: LoginRequest): Observable<AuthResponse> {
+        localStorage.setItem(this.USER_KEY, credentials.username.trim());
         return this.http.post<AuthResponse>('/api/auth/login', credentials).pipe(
             tap((response) => this.handleAuthSuccess(response))
         );
@@ -34,6 +36,7 @@ export class AuthService {
     }
 
     logout(): void {
+        localStorage.removeItem(this.USER_KEY);
         localStorage.removeItem(this.TOKEN_KEY);
         this._token.set(null);
         this.router.navigate(['/auth/login']);

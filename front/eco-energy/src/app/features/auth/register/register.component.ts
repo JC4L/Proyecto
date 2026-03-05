@@ -6,21 +6,21 @@ import { AuthService } from '../../../core/services/auth.service';
 import { RegisterRequest } from '../../../core/models/auth.models';
 
 @Component({
-    selector: 'app-register',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [ReactiveFormsModule, RouterLink],
-    template: `
+  selector: 'app-register',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ReactiveFormsModule, RouterLink],
+  template: `
     <div class="relative flex min-h-screen w-full overflow-hidden">
       <!-- Left Side: Visual Inspiration -->
       <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-primary/10">
-        <div class="absolute inset-0 z-10 bg-gradient-to-t from-bg-dark/80 via-transparent to-transparent"></div>
+        <div class="absolute inset-0 z-10 bg-linear-to-t from-bg-dark/80 via-transparent to-transparent"></div>
         <div
           class="absolute inset-0 z-0 bg-cover bg-center"
           style="background-image: url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1200&q=80');"
         ></div>
-        <div class="relative z-20 flex flex-col justify-end p-20 w-full">
-          <div class="flex items-center gap-3 mb-6">
-            <div class="p-2 bg-primary rounded-lg text-bg-dark">
+        <div class="relative z-20 flex flex-col justify-end px-20 py-10 w-full">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="p-2 bg-primary rounded-lg text-bg-dark flex items-center justify-center">
               <span class="material-symbols-outlined text-3xl font-bold">bolt</span>
             </div>
             <h1 class="text-white text-3xl font-bold tracking-tight">EcoEnergy</h1>
@@ -35,18 +35,18 @@ import { RegisterRequest } from '../../../core/models/auth.models';
       </div>
 
       <!-- Right Side: Register Form -->
-      <div class="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 py-12 sm:px-12 lg:px-24 bg-white">
-        <div class="w-full max-w-md space-y-8">
+      <div class="w-full lg:w-1/2 flex flex-col justify-center items-center px-6 sm:px-12 lg:px-24 bg-white">
+        <div class="w-full max-w-md space-y-6">
           <!-- Mobile Logo -->
-          <div class="lg:hidden flex items-center gap-3 mb-10">
-            <div class="p-2 bg-primary rounded-lg text-bg-dark">
+          <div class="lg:hidden flex items-center gap-3 mb-4">
+            <div class="p-2 bg-primary rounded-lg text-bg-dark flex items-center justify-center">
               <span class="material-symbols-outlined text-2xl font-bold">bolt</span>
             </div>
             <h1 class="text-slate-900 text-2xl font-bold tracking-tight">EcoEnergy</h1>
           </div>
 
           <!-- Title -->
-          <div class="space-y-2">
+          <div>
             <h2 class="text-3xl font-black text-slate-900 tracking-tight">Crear una Cuenta</h2>
             <p class="text-slate-500">Regístrate para acceder a todas las funcionalidades.</p>
           </div>
@@ -60,7 +60,7 @@ import { RegisterRequest } from '../../../core/models/auth.models';
               Iniciar Sesión
             </a>
             <span
-              class="flex-1 py-2 text-sm font-semibold rounded-lg bg-white shadow-sm text-slate-900 text-center"
+              class="flex-1 py-2 text-sm font-semibold rounded-lg bg-white shadow-sm text-slate-900 text-center pointer-events-none"
             >
               Registrarse
             </span>
@@ -69,7 +69,7 @@ import { RegisterRequest } from '../../../core/models/auth.models';
           <!-- Form -->
           <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
             <!-- Username -->
-            <div class="space-y-2">
+            <div class="space-y-2 relative">
               <label class="block text-sm font-semibold text-slate-700 ml-1" for="reg-username">
                 Nombre de usuario
               </label>
@@ -86,18 +86,15 @@ import { RegisterRequest } from '../../../core/models/auth.models';
                 />
               </div>
               @if (registerForm.get('username')?.touched && registerForm.get('username')?.hasError('required')) {
-                <p class="text-xs text-red-500 font-medium ml-1">El nombre de usuario es obligatorio.</p>
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">El nombre de usuario es obligatorio.</p>
               }
               @if (registerForm.get('username')?.touched && registerForm.get('username')?.hasError('minlength')) {
-                <p class="text-xs text-red-500 font-medium ml-1">Debe tener al menos 3 caracteres.</p>
-              }
-              @if (registerForm.get('username')?.touched && registerForm.get('username')?.hasError('maxlength')) {
-                <p class="text-xs text-red-500 font-medium ml-1">No puede exceder 50 caracteres.</p>
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">Debe tener al menos 3 caracteres.</p>
               }
             </div>
 
             <!-- Email -->
-            <div class="space-y-2">
+            <div class="space-y-2 relative">
               <label class="block text-sm font-semibold text-slate-700 ml-1" for="reg-email">
                 Correo electrónico
               </label>
@@ -114,15 +111,15 @@ import { RegisterRequest } from '../../../core/models/auth.models';
                 />
               </div>
               @if (registerForm.get('email')?.touched && registerForm.get('email')?.hasError('required')) {
-                <p class="text-xs text-red-500 font-medium ml-1">El correo electrónico es obligatorio.</p>
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">El correo electrónico es obligatorio.</p>
               }
               @if (registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')) {
-                <p class="text-xs text-red-500 font-medium ml-1">Ingrese un correo electrónico válido.</p>
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">Ingrese un correo electrónico válido.</p>
               }
             </div>
 
             <!-- Password -->
-            <div class="space-y-2">
+            <div class="space-y-2 relative">
               <label class="block text-sm font-semibold text-slate-700 ml-1" for="reg-password">
                 Contraseña
               </label>
@@ -149,10 +146,10 @@ import { RegisterRequest } from '../../../core/models/auth.models';
                 </button>
               </div>
               @if (registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required')) {
-                <p class="text-xs text-red-500 font-medium ml-1">La contraseña es obligatoria.</p>
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">La contraseña es obligatoria.</p>
               }
               @if (registerForm.get('password')?.touched && registerForm.get('password')?.hasError('minlength')) {
-                <p class="text-xs text-red-500 font-medium ml-1">Debe tener al menos 8 caracteres.</p>
+                <p class="text-xs text-red-500 font-medium ml-1 absolute right-0">Debe tener al menos 8 caracteres.</p>
               }
             </div>
 
@@ -167,7 +164,7 @@ import { RegisterRequest } from '../../../core/models/auth.models';
             <button
               type="submit"
               [disabled]="isLoading()"
-              class="w-full py-4 bg-primary text-bg-dark font-bold rounded-xl hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-smooth flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="cursor-pointer mt-9 w-full py-4 bg-primary text-bg-dark font-bold rounded-xl hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-smooth flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary/80"
             >
               @if (isLoading()) {
                 <div class="w-5 h-5 border-2 border-bg-dark/30 border-t-bg-dark rounded-full animate-spin"></div>
@@ -178,64 +175,50 @@ import { RegisterRequest } from '../../../core/models/auth.models';
               }
             </button>
           </form>
-
-          <!-- Footer Link -->
-          <p class="text-center text-sm text-slate-500 pt-4">
-            ¿Ya tienes una cuenta?
-            <a routerLink="/auth/login" class="font-bold text-primary hover:underline">Inicia sesión</a>
-          </p>
-        </div>
-
-        <!-- Bottom Info -->
-        <div class="mt-auto pt-10 text-xs text-slate-400 text-center flex gap-4">
-          <a href="#" class="hover:text-primary transition-fast">Términos de Servicio</a>
-          <a href="#" class="hover:text-primary transition-fast">Política de Privacidad</a>
-          <a href="#" class="hover:text-primary transition-fast">Soporte</a>
-        </div>
       </div>
     </div>
   `,
 })
 export class RegisterComponent {
-    private readonly fb = inject(FormBuilder);
-    private readonly authService = inject(AuthService);
-    private readonly router = inject(Router);
+  private readonly fb = inject(FormBuilder);
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
 
-    readonly showPassword = signal(false);
-    readonly isLoading = signal(false);
-    readonly errorMessage = signal<string>('');
+  readonly showPassword = signal(false);
+  readonly isLoading = signal(false);
+  readonly errorMessage = signal<string>('');
 
-    readonly registerForm = this.fb.nonNullable.group({
-        username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
+  readonly registerForm = this.fb.nonNullable.group({
+    username: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
+  });
+
+  togglePassword(): void {
+    this.showPassword.update((v) => !v);
+  }
+
+  onSubmit(): void {
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
+
+    this.isLoading.set(true);
+    this.errorMessage.set('');
+
+    const data: RegisterRequest = this.registerForm.getRawValue();
+    this.authService.register(data).subscribe({
+      next: () => {
+        this.isLoading.set(false);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.isLoading.set(false);
+        this.errorMessage.set(
+          err.error?.message || err.error || 'Error al registrar. Intente nuevamente.'
+        );
+      },
     });
-
-    togglePassword(): void {
-        this.showPassword.update((v) => !v);
-    }
-
-    onSubmit(): void {
-        if (this.registerForm.invalid) {
-            this.registerForm.markAllAsTouched();
-            return;
-        }
-
-        this.isLoading.set(true);
-        this.errorMessage.set('');
-
-        const data: RegisterRequest = this.registerForm.getRawValue();
-        this.authService.register(data).subscribe({
-            next: () => {
-                this.isLoading.set(false);
-                this.router.navigate(['/dashboard']);
-            },
-            error: (err) => {
-                this.isLoading.set(false);
-                this.errorMessage.set(
-                    err.error?.message || err.error || 'Error al registrar. Intente nuevamente.'
-                );
-            },
-        });
-    }
+  }
 }
