@@ -1,7 +1,9 @@
 package com.energia.api.service;
 
 import com.energia.api.dto.user.AuthResponse;
+import com.energia.api.dto.user.DeleteRequest;
 import com.energia.api.dto.user.LoginRequest;
+import com.energia.api.dto.user.MessageResponse;
 import com.energia.api.dto.user.RegisterRequest;
 import com.energia.api.dto.user.UpdateRequestDTO;
 import com.energia.api.modelo.User;
@@ -32,15 +34,15 @@ public class UserService {
                 request.getUsername().isEmpty() ||
                 request.getPassword().isEmpty() ||
                 request.getEmail().isEmpty()) {
-            return ResponseEntity.badRequest().body("Todos los campos son obligatorios");
+            return ResponseEntity.badRequest().body(new MessageResponse("Todos los campos son obligatorios"));
         }
         // validar que el usuario no exista
         if (userRepository.existsByUsername(request.getUsername())) {
-            return ResponseEntity.badRequest().body("El usuario ya existe");
+            return ResponseEntity.badRequest().body(new MessageResponse("El usuario ya existe"));
         }
         // validar que el email no exista
         if (userRepository.existsByEmail(request.getEmail())) {
-            return ResponseEntity.badRequest().body("El email ya existe");
+            return ResponseEntity.badRequest().body(new MessageResponse("El email ya existe"));
         }
 
         // construir el User desde el DTO y encriptar la contraseña
@@ -63,17 +65,19 @@ public class UserService {
                 return ResponseEntity.ok().body(new AuthResponse(token));
             }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Credenciales inválidas"));
     }
 
-    public ResponseEntity<?> delete(String username) {
+    public ResponseEntity<?> delete(String username, DeleteRequest request) {
         Optional<User> maybeUser = userRepository.findByUsername(username);
         if (maybeUser.isPresent()) {
             User user = maybeUser.get();
-            userRepository.delete(user);
-            return ResponseEntity.ok().body("Usuario eliminado correctamente");
+            if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+                userRepository.delete(user);
+                return ResponseEntity.ok().body(new MessageResponse("Usuario eliminado correctamente"));
+            }
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Credenciales inválidas"));
     }
 
     public ResponseEntity<?> update(String username, UpdateRequestDTO request) {
@@ -83,14 +87,14 @@ public class UserService {
             User user = maybeUser.get();
             if (request.getNewUsername() != null && !request.getNewUsername().isEmpty()) {
                 if (userRepository.existsByUsername(request.getNewUsername().trim().toLowerCase())) {
-                    return ResponseEntity.badRequest().body("El nombre de usuario ya existe");
+                    return ResponseEntity.badRequest().body(new MessageResponse("El nombre de usuario ya existe"));
                 }
                 user.setUsername(request.getNewUsername().trim().toLowerCase());
                 needToken = true;
             }
             if (request.getNewEmail() != null && !request.getNewEmail().isEmpty()) {
                 if (userRepository.existsByEmail(request.getNewEmail())) {
-                    return ResponseEntity.badRequest().body("El email ya existe");
+                    return ResponseEntity.badRequest().body(new MessageResponse("El email ya existe"));
                 }
                 user.setEmail(request.getNewEmail());
             }
@@ -102,8 +106,8 @@ public class UserService {
                 String token = jwtService.generateToken(user.getUsername());
                 return ResponseEntity.ok().body(new AuthResponse(token));
             }
-            return ResponseEntity.ok().body("Usuario actualizado correctamente");
+            return ResponseEntity.ok().body(new MessageResponse("Usuario actualizado correctamente"));
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new MessageResponse("Credenciales inválidas"));
     }
 }
