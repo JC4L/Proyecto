@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EnergiData - El Futuro de la Energía Renovable</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec6d",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#102218",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-primary/10 px-6 py-4 md:px-20 lg:px-40 bg-white dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-2">
+<div class="text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">bolt</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight tracking-tight">EnergiData</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<nav class="flex items-center gap-8">
+<a class="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Inicio</a>
+<a class="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#caracteristicas">Características</a>
+<a class="text-slate-700 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#nosotros">Sobre Nosotros</a>
+</nav>
+<div class="flex gap-3">
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-primary text-slate-900 text-sm font-bold transition-all hover:opacity-90">
+                            Registrarse
+                        </button>
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-xl h-10 px-4 bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+                            Iniciar Sesión
+                        </button>
+</div>
+</div>
+<!-- Mobile Menu Icon (Visual Only) -->
+<div class="md:hidden">
+<span class="material-symbols-outlined">menu</span>
+</div>
+</header>
+<main class="flex-1">
+<!-- Hero Section -->
+<div class="px-6 md:px-20 lg:px-40 py-12 md:py-20">
+<div class="flex flex-col gap-10 lg:flex-row lg:items-center">
+<div class="flex flex-col gap-6 lg:w-1/2">
+<div class="flex flex-col gap-4">
+<span class="text-primary font-bold tracking-widest text-xs uppercase">Tecnología Sostenible</span>
+<h1 class="text-slate-900 dark:text-white text-5xl md:text-6xl font-black leading-tight tracking-tight">
+                                    El Futuro de los <span class="text-primary">Datos Energéticos</span>
+</h1>
+<p class="text-slate-600 dark:text-slate-400 text-lg md:text-xl leading-relaxed max-w-xl">
+                                    Optimice su consumo y transicione hacia un futuro sostenible con nuestra plataforma de análisis avanzado en tiempo real para energías renovables.
+                                </p>
+</div>
+<div class="flex flex-wrap gap-4 pt-2">
+<button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-6 bg-primary text-slate-900 text-base font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-transform">
+                                    Comenzar ahora
+                                </button>
+<button class="flex min-w-[160px] cursor-pointer items-center justify-center rounded-xl h-14 px-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white text-base font-bold hover:bg-slate-50 transition-all">
+                                    Ver Demo
+                                </button>
+</div>
+</div>
+<div class="lg:w-1/2">
+<div class="relative w-full aspect-square md:aspect-video lg:aspect-square bg-gradient-to-br from-primary/20 to-blue-500/20 rounded-3xl overflow-hidden border border-primary/10">
+<div class="absolute inset-0 flex items-center justify-center">
+<img alt="Molinos de viento modernos en un campo verde al atardecer" class="w-full h-full object-cover opacity-80" data-alt="Modern wind turbines in a green field at sunset" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBv3IE4JR_jJ4FJR8SvQ0PIvcb0J_v6xEBzOSU4Jqg5QSDb7Uc2aNZBJwcudUmq5rn8qVSLtjEO7pgluZV2RqHn6Nh-ap9IvW7FFqYXT_d9NBhEufIuxtTZunZM8B0zSAyfIR58C2Ab0ZHd-yn_injPueNIgpkHVGJZWwlG8dnzB62L9UjWcDlzYzuZL6Q3Ga3ydrD3oNDeHlq6Qpwn9xOewS7bOmEwN-8W2IVjzwxei9S_sC4i850krPAaUanMRXqEpVNl4eXcAyQ"/>
+</div>
+<div class="absolute bottom-6 left-6 right-6 p-6 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl">
+<div class="flex items-center justify-between mb-4">
+<h3 class="font-bold text-slate-900 dark:text-white">Producción en Tiempo Real</h3>
+<span class="text-primary font-bold">+24% ↑</span>
+</div>
+<div class="h-24 w-full bg-slate-100 dark:bg-slate-800 rounded-lg flex items-end gap-1 p-2">
+<div class="bg-primary/40 w-full rounded-t" style="height: 40%"></div>
+<div class="bg-primary/60 w-full rounded-t" style="height: 65%"></div>
+<div class="bg-primary/40 w-full rounded-t" style="height: 45%"></div>
+<div class="bg-primary/80 w-full rounded-t" style="height: 85%"></div>
+<div class="bg-primary w-full rounded-t" style="height: 100%"></div>
+<div class="bg-primary/70 w-full rounded-t" style="height: 75%"></div>
+<div class="bg-primary/50 w-full rounded-t" style="height: 55%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sources Section -->
+<section class="bg-white dark:bg-slate-900/50 py-20 px-6 md:px-20 lg:px-40">
+<div class="text-center mb-16">
+<h2 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-bold mb-4">Nuestras Fuentes de Energía</h2>
+<p class="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Monitoreamos y analizamos datos de múltiples fuentes renovables para ofrecerte una visión 360 de tu impacto energético.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="group p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-background-light dark:bg-background-dark hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5">
+<div class="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-slate-900 transition-colors">
+<span class="material-symbols-outlined text-3xl">wb_sunny</span>
+</div>
+<h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Energía Solar</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">Monitoreo preciso de paneles fotovoltaicos, eficiencia por celda y predicción de irradiación solar.</p>
+</div>
+<div class="group p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-background-light dark:bg-background-dark hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5">
+<div class="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-slate-900 transition-colors">
+<span class="material-symbols-outlined text-3xl">air</span>
+</div>
+<h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Energía Eólica</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">Análisis de rendimiento de turbinas en tiempo real y optimización basada en patrones de viento.</p>
+</div>
+<div class="group p-8 rounded-2xl border border-slate-100 dark:border-slate-800 bg-background-light dark:bg-background-dark hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/5">
+<div class="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:bg-primary group-hover:text-slate-900 transition-colors">
+<span class="material-symbols-outlined text-3xl">water_drop</span>
+</div>
+<h3 class="text-xl font-bold mb-3 text-slate-900 dark:text-white">Hidroeléctrica</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">Gestión inteligente de recursos hídricos y flujo de energía constante para máxima estabilidad.</p>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-20 px-6 md:px-20 lg:px-40" id="caracteristicas">
+<div class="flex flex-col lg:flex-row gap-16 items-center">
+<div class="lg:w-1/2 grid grid-cols-2 gap-4">
+<div class="aspect-square bg-primary/10 rounded-2xl flex items-center justify-center p-8">
+<img alt="Cuadro de mando de análisis de datos moderno" class="w-full h-full object-cover rounded-xl" data-alt="Modern data analytics dashboard interface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCb_NneZHk-nOj0PbPoOh6YMQ8Bgt7Zlz5agJFO8zc_ZkJfENqOH7DH7Qf1fOqHMnY_emr7qMncfjrFJbYRT3Z7QrKxbYlIdKjVAzaN9sPactN_1YIgS1509l54p6buq2hnMyQd0_F9sHPVrBgyspBdXRX7VbY3I81DrO1F3FddM9-MwC2h7Zb7AT4gCo9EXonKMl-Kb8TaiHYNEFGbXdfhZT8n1_Ani0JTurgdI4F2dAZJjUM3VWMqy1FSPojRFFxc5SYuPbrm8jk"/>
+</div>
+<div class="aspect-square bg-slate-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center mt-8">
+<img alt="Conexiones de red digital y datos" class="w-full h-full object-cover rounded-xl" data-alt="Digital network connections and data flows" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1ziVvBxVhtwARIjh3XbGMlI2_kbEDBJD0jZsiRFKMQqGrKUiIFA26-otGweA2oa7XNal8j2Endh_X1rwzV9Yb_helmhMXYVJ2Sdq-PhYeVyBtoskj_aq-taJ37-24pAZp6YQXAAAXSOQudRPXCDtl54LW-ZWmi59CRv5fJOY3Xvhx4e-VG0oNKN0nx6lwvI8n8EFf-ZfViCYxwzHeEKCGJ6RNsgeBl89Oq-AKeVJuvFSuCWgCnx6ildFQa2wPv0RoIlOyFxKdsmU"/>
+</div>
+</div>
+<div class="lg:w-1/2 flex flex-col gap-8">
+<div>
+<h2 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-bold mb-4">Características Clave</h2>
+<p class="text-slate-600 dark:text-slate-400">Nuestra plataforma utiliza tecnología de vanguardia para garantizar que cada kilovatio cuente.</p>
+</div>
+<div class="space-y-6">
+<div class="flex gap-4">
+<div class="shrink-0 w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">insights</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white">Análisis Predictivo</h4>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Modelos de IA que predicen la producción futura con un 98% de precisión.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="shrink-0 w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white">Reportes Automatizados</h4>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Generación de informes PDF mensuales listos para auditorías energéticas.</p>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="shrink-0 w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">security</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-white">Seguridad de Grado Bancario</h4>
+<p class="text-slate-600 dark:text-slate-400 text-sm">Tus datos están encriptados de extremo a extremo con protocolos militares.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- About Us Section -->
+<section class="bg-slate-900 text-white py-24 px-6 md:px-20 lg:px-40 rounded-[2rem] mx-6 mb-20" id="nosotros">
+<div class="max-w-4xl mx-auto text-center">
+<h2 class="text-3xl md:text-5xl font-black mb-8">Nuestra Misión</h2>
+<p class="text-slate-300 text-xl leading-relaxed mb-12">
+                            En EnergiData, creemos que la transparencia de los datos es la clave para acelerar la transición energética global. Trabajamos con empresas y gobiernos para hacer que la energía limpia sea medible, optimizable y accesible para todos.
+                        </p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+<div>
+<div class="text-4xl font-bold text-primary mb-2">500+</div>
+<div class="text-slate-400 text-sm uppercase tracking-wider">Clientes</div>
+</div>
+<div>
+<div class="text-4xl font-bold text-primary mb-2">12GW</div>
+<div class="text-slate-400 text-sm uppercase tracking-wider">Monitoreados</div>
+</div>
+<div>
+<div class="text-4xl font-bold text-primary mb-2">15</div>
+<div class="text-slate-400 text-sm uppercase tracking-wider">Países</div>
+</div>
+<div>
+<div class="text-4xl font-bold text-primary mb-2">24/7</div>
+<div class="text-slate-400 text-sm uppercase tracking-wider">Soporte</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-20 px-6 md:px-20 lg:px-40 text-center">
+<div class="bg-primary/10 rounded-[2.5rem] p-12 border border-primary/20 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -mr-32 -mt-32"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -ml-32 -mb-32"></div>
+<h2 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-bold mb-6">¿Listo para transformar tu gestión energética?</h2>
+<p class="text-slate-600 dark:text-slate-400 text-lg mb-10 max-w-xl mx-auto">Únete a miles de empresas que ya están ahorrando costos y reduciendo su huella de carbono con EnergiData.</p>
+<div class="flex flex-col sm:flex-row justify-center gap-4">
+<button class="bg-primary text-slate-900 px-8 py-4 rounded-xl font-bold hover:scale-105 transition-transform shadow-lg shadow-primary/20">Empieza Gratis</button>
+<button class="bg-white dark:bg-slate-800 text-slate-900 dark:text-white px-8 py-4 rounded-xl font-bold border border-slate-200 dark:border-slate-700 hover:bg-slate-50 transition-all">Hablar con un Experto</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-white dark:bg-background-dark border-t border-slate-100 dark:border-slate-800 py-12 px-6 md:px-20 lg:px-40">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+<span class="text-xl font-bold dark:text-white">EnergiData</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed">
+                            Liderando el análisis de datos para un mundo impulsado por energías 100% renovables.
+                        </p>
+</div>
+<div>
+<h4 class="font-bold mb-6 dark:text-white">Producto</h4>
+<ul class="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Funcionalidades</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Integraciones</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Precios</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Empresas</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 dark:text-white">Compañía</h4>
+<ul class="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Sobre Nosotros</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Carreras</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Contacto</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold mb-6 dark:text-white">Legal</h4>
+<ul class="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Privacidad</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Términos</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Cookies</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+<p>© 2024 EnergiData. Todos los derechos reservados.</p>
+<div class="flex gap-6">
+<a class="hover:text-primary" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="hover:text-primary" href="#"><span class="material-symbols-outlined">share</span></a>
+<a class="hover:text-primary" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+</div>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

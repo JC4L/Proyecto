@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#13ec6d",
+                "background-light": "#f6f8f7",
+                "background-dark": "#102218",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+            },
+          },
+        }
+      </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav {
+            background-color: rgba(19, 236, 109, 0.2);
+            color: #102218;
+            border-right: 4px solid #13ec6d;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col hidden md:flex">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary p-2 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-background-dark">bolt</span>
+</div>
+<div>
+<h1 class="text-lg font-bold leading-tight">EcoEnergetix</h1>
+<p class="text-xs text-slate-500">Gestión de Recursos</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1">
+<a class="active-nav flex items-center gap-3 px-3 py-3 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Panel de Control</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-all" href="#">
+<span class="material-symbols-outlined">factory</span>
+<span class="text-sm font-medium">Producción Total</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-all" href="#">
+<span class="material-symbols-outlined">eco</span>
+<span class="text-sm font-medium">% Renovable</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-all" href="#">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="text-sm font-medium">Tendencias</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-all" href="#">
+<span class="material-symbols-outlined">public</span>
+<span class="text-sm font-medium">Principales Países</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-3 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-primary/10 transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Ajustes</span>
+</a>
+</div>
+</aside>
+<!-- Main Area -->
+<main class="flex-1 flex flex-col overflow-y-auto">
+<!-- Header -->
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-8 sticky top-0 z-10">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-xl text-sm focus:ring-2 focus:ring-primary/50" placeholder="Buscar datos, países o reportes..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:border-slate-800"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-xs font-bold">Carlos Mendoza</p>
+<p class="text-[10px] text-slate-500">Administrador de Energía</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-cover bg-center border-2 border-primary/30" data-alt="Foto de perfil del administrador de energía" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC7_J8ELn6-Mxq0yH-jsLos8d7NiADGasMNRyS8LzdEoAYWGs_H2uz1bu1UDy2raYpaFbIsK9EVK52aWQJ7AnrhcTrA7zkSB9h4CIQFPKATBRLE9llRp8MYsKiq1gcPdjlTo80H3n4DQtCua_FTBY9GVjma2_W-rwuUExIPYzuhVRpVEVS2F3nOR4wWroIVdJWwlc9IlAFVjQksu15-YHcNFFjUoeBnAmIlImD4mYplth-nycgboYQYD20y4kMHFp0TuXOOwbrqZVE')"></div>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-8">
+<div class="mb-8">
+<h2 class="text-3xl font-black tracking-tight mb-1">Panel de Control</h2>
+<p class="text-slate-500">Bienvenido de nuevo. Aquí tienes el resumen global de producción energética.</p>
+</div>
+<!-- KPI Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg text-blue-600">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<span class="text-green-500 text-xs font-bold flex items-center bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm">trending_up</span> +5.2%
+                            </span>
+</div>
+<p class="text-sm text-slate-500 font-medium">Producción Total</p>
+<h3 class="text-2xl font-black">1,250 TWh</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">eco</span>
+</div>
+<span class="text-green-500 text-xs font-bold flex items-center bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm">trending_up</span> +12.4%
+                            </span>
+</div>
+<p class="text-sm text-slate-500 font-medium">Energía Renovable</p>
+<h3 class="text-2xl font-black">64%</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg text-amber-600">
+<span class="material-symbols-outlined">military_tech</span>
+</div>
+<span class="text-red-500 text-xs font-bold flex items-center bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded-full">
+<span class="material-symbols-outlined text-sm">trending_down</span> -1%
+                            </span>
+</div>
+<p class="text-sm text-slate-500 font-medium">Ranking Global</p>
+<h3 class="text-2xl font-black">4º</h3>
+</div>
+</div>
+<!-- Chart Section -->
+<div class="bg-white dark:bg-slate-900 p-8 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+<div>
+<h4 class="text-lg font-bold">Resumen de Producción Anual</h4>
+<p class="text-sm text-slate-500">Histórico de generación en TeraWatts-hora</p>
+</div>
+<div class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
+<button class="px-4 py-1.5 text-xs font-bold rounded-md bg-white dark:bg-slate-700 shadow-sm">Mensual</button>
+<button class="px-4 py-1.5 text-xs font-medium text-slate-500">Anual</button>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-2 sm:gap-4 px-2">
+<!-- Bar Chart -->
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative h-full flex flex-col justify-end overflow-hidden">
+<div class="bg-primary/40 w-full rounded-t-lg transition-all" style="height: 40%"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">ENE</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative h-full flex flex-col justify-end overflow-hidden">
+<div class="bg-primary/60 w-full rounded-t-lg transition-all" style="height: 65%"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">FEB</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative h-full flex flex-col justify-end overflow-hidden">
+<div class="bg-primary w-full rounded-t-lg transition-all" style="height: 90%"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">MAR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative h-full flex flex-col justify-end overflow-hidden">
+<div class="bg-primary/50 w-full rounded-t-lg transition-all" style="height: 55%"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">ABR</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative h-full flex flex-col justify-end overflow-hidden">
+<div class="bg-primary/70 w-full rounded-t-lg transition-all" style="height: 75%"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">MAY</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative h-full flex flex-col justify-end overflow-hidden">
+<div class="bg-primary w-full rounded-t-lg transition-all" style="height: 85%"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">JUN</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative h-full flex flex-col justify-end overflow-hidden">
+<div class="bg-primary/40 w-full rounded-t-lg transition-all" style="height: 45%"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">JUL</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative h-full flex flex-col justify-end overflow-hidden">
+<div class="bg-primary/90 w-full rounded-t-lg transition-all" style="height: 95%"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">AGO</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-2 group">
+<div class="w-full bg-slate-100 dark:bg-slate-800 rounded-t-lg relative h-full flex flex-col justify-end overflow-hidden">
+<div class="bg-primary/80 w-full rounded-t-lg transition-all" style="height: 80%"></div>
+</div>
+<span class="text-[10px] font-bold text-slate-400">SEP</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<footer class="mt-auto bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-8 py-6">
+<div class="flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">bolt</span>
+<span class="font-bold text-sm">EcoEnergetix © 2024</span>
+</div>
+<div class="flex gap-8">
+<a class="text-xs text-slate-500 hover:text-primary transition-colors" href="#">Soporte</a>
+<a class="text-xs text-slate-500 hover:text-primary transition-colors" href="#">Privacidad</a>
+<a class="text-xs text-slate-500 hover:text-primary transition-colors" href="#">Contacto</a>
+</div>
+<div class="flex gap-4">
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary/20 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined text-sm">language</span>
+</a>
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary/20 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</a>
+<a class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-primary/20 hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined text-sm">share</span>
+</a>
+</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>
