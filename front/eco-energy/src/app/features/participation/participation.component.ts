@@ -206,7 +206,6 @@ export class ParticipationComponent implements OnInit {
   formatSourceName(source: string): string {
     return source
       .replace('Share Electricity ', '')
-      .replace('Renewables', 'Renovables Total')
       .replace('Hydro', 'Hidroeléctrica')
       .replace('Wind', 'Eólica')
       .replace('Solar', 'Solar');
