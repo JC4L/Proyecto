@@ -16,7 +16,7 @@ interface NavItem {
     <aside class="flex flex-col h-full w-64 bg-bg-dark text-white transition-theme">
       <!-- Brand -->
       <div class="flex items-center gap-3 p-6 border-b border-white/10">
-        <div class="p-2 bg-primary rounded-lg">
+        <div class="p-2 bg-primary rounded-lg flex items-center justify-center">
           <span class="material-symbols-outlined text-bg-dark font-bold text-xl">bolt</span>
         </div>
         <div>
@@ -43,11 +43,11 @@ interface NavItem {
       <!-- Footer -->
       <div class="p-4 border-t border-white/10">
         <a
-          routerLink="/dashboard"
+          routerLink="/about"
           class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-white/50 hover:bg-white/10 hover:text-white transition-smooth"
         >
-          <span class="material-symbols-outlined text-[20px]">settings</span>
-          <span>Configuración</span>
+          <span class="material-symbols-outlined text-[20px]">people</span>
+          <span>Sobre nosotros</span>
         </a>
       </div>
     </aside>

@@ -14,6 +14,7 @@ import { ThemeService } from '../../core/services/theme.service';
 import { ParticipationElectricalConsumption } from '../../core/models/energy.models';
 import { LoadingSpinnerComponent } from '../../shared/components/loading-spinner/loading-spinner.component';
 import { EmptyStateComponent } from '../../shared/components/empty-state/empty-state.component';
+import { entities } from '../../constant/entities';
 
 @Component({
   selector: 'app-participation',
@@ -31,8 +32,13 @@ import { EmptyStateComponent } from '../../shared/components/empty-state/empty-s
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
           <div>
             <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1" for="pa-entity">Entidad</label>
-            <input id="pa-entity" type="text" formControlName="entityName" placeholder="World, China, etc."
-              class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" />
+            <select id="pa-entity" formControlName="entityName"
+              class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
+              <option value="World" selected>World</option>
+              @for (entity of entities; track entity) {
+                <option [value]="entity">{{ entity }}</option>
+              }
+            </select>
           </div>
           <div>
             <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1" for="pa-year">Año</label>
@@ -110,6 +116,7 @@ export class ParticipationComponent implements OnInit {
   private readonly energyService = inject(EnergyService);
   private readonly fb = inject(FormBuilder);
   private readonly themeService = inject(ThemeService);
+  readonly entities = entities;
 
   private readonly chartTitleColor = computed(() => this.themeService.darkMode() ? '#FFFFFF' : '#0f172a');
   private readonly chartTextColor = computed(() => this.themeService.darkMode() ? '#94A3B8' : '#334155');

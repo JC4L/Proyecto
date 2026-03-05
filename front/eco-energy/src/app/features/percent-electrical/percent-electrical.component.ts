@@ -35,7 +35,7 @@ import { EmptyStateComponent } from '../../shared/components/empty-state/empty-s
               class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" />
           </div>
           <div>
-            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1" for="pe-limit">Límite</label>
+            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1" for="pe-limit">Filas</label>
             <input id="pe-limit" type="number" formControlName="limit" min="1" max="50"
               class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" />
           </div>
