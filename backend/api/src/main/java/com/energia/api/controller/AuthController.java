@@ -1,5 +1,6 @@
 package com.energia.api.controller;
 
+import com.energia.api.dto.user.DeleteRequest;
 import com.energia.api.dto.user.LoginRequest;
 import com.energia.api.dto.user.RegisterRequest;
 import com.energia.api.dto.user.UpdateRequestDTO;
@@ -29,8 +30,8 @@ public class AuthController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(Authentication authentication) {
-        return userService.delete(authentication.getName());
+    public ResponseEntity<?> delete(Authentication authentication, @Valid @RequestBody DeleteRequest request) {
+        return userService.delete(authentication.getName(), request);
     }
 
     @PutMapping("/update")
