@@ -49,10 +49,13 @@ import { entities } from '../../constant/entities';
               }
             </select>
           </div>
-          <div>
+          <div class="relative">
             <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1" for="tr-limit">Nº de Años</label>
-            <input id="tr-limit" type="number" formControlName="limit" min="5" max="50"
+            <input id="tr-limit" type="number" formControlName="limit" min="5" max="30"
               class="w-full px-3 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" />
+            @if (filterForm.get('limit')?.invalid && hasSearched()) {
+              <p class="text-red-500 text-xs mt-1 absolute right-0">valores entre 5 y 30.</p>
+            }
           </div>
           <button type="submit" [disabled]="isLoading()"
             class="px-6 py-2.5 bg-primary text-bg-dark font-bold rounded-xl hover:shadow-lg hover:shadow-primary/20 active:scale-[0.98] transition-smooth disabled:opacity-50 flex items-center justify-center gap-2">
@@ -130,7 +133,7 @@ export class TrendComponent implements OnInit {
   readonly filterForm = this.fb.nonNullable.group({
     energyType: ['Installed Solar PV Capacity'],
     entityName: ['World'],
-    limit: [20, [Validators.required, Validators.min(5), Validators.max(50)]],
+    limit: [20, [Validators.required, Validators.min(5), Validators.max(30)]],
   });
 
   readonly chartOptions = computed(() => {
