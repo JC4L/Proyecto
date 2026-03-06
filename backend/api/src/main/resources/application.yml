@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/energy_db
     username: postgres
-    password: 123
+    password: luzenith9424
   # security:
   #   user:
   #     name: admin

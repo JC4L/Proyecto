@@ -4,6 +4,7 @@ import {
     input,
     output,
     signal,
+    computed,
     inject,
     effect,
 } from '@angular/core';
@@ -114,7 +115,7 @@ type PanelView = 'menu' | 'username' | 'email' | 'password' | 'delete';
                             <p
                                 class="text-base font-bold text-slate-900 dark:text-white"
                             >
-                                {{ userName }}
+                                {{ userName() }}
                             </p>
                             <p
                                 class="text-xs text-slate-400 dark:text-slate-500"
@@ -762,7 +763,7 @@ export class UserProfilePanelComponent {
     readonly showPassword = signal(false);
     readonly showNewPassword = signal(false);
 
-    readonly userName = localStorage.getItem('eco_energy_user') ?? 'Usuario';
+    readonly userName = computed(() => this.authService.user() ?? 'Usuario');
 
     /** Computed panel title based on active view */
     readonly panelTitle = signal('Mi Perfil');
