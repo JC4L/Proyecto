@@ -1,10 +1,12 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, signal } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
 import { ThemeService } from '../../core/services/theme.service';
+import { UserProfilePanelComponent } from '../../shared/components/user-profile-panel/user-profile-panel.component';
 
 @Component({
   selector: 'app-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [UserProfilePanelComponent],
   template: `
     <header
       class="h-16 bg-white dark:bg-surface-dark border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 md:px-8 sticky top-0 z-10 transition-theme"
@@ -56,6 +58,12 @@ import { ThemeService } from '../../core/services/theme.service';
         </button>
       </div>
     </header>
+
+    <!-- Profile Panel -->
+    <app-user-profile-panel
+      [isOpen]="profilePanelOpen()"
+      (closed)="profilePanelOpen.set(false)"
+    />
   `,
   styles: `:host { display: contents; }`,
 })
@@ -64,6 +72,7 @@ export class HeaderComponent {
   readonly themeService = inject(ThemeService);
 
   readonly userKey = localStorage.getItem('eco_energy_user');
+  readonly profilePanelOpen = signal(false);
 
   /** Emits to parent layout via a callback */
   private sidebarToggleFn: (() => void) | null = null;
@@ -78,6 +87,10 @@ export class HeaderComponent {
 
   toggleTheme(): void {
     this.themeService.toggle();
+  }
+
+  toggleProfilePanel(): void {
+    this.profilePanelOpen.update((v) => !v);
   }
 
   onLogout(): void {

@@ -2,7 +2,14 @@ import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { inject } from '@angular/core';
-import { LoginRequest, RegisterRequest, AuthResponse } from '../models/auth.models';
+import {
+    LoginRequest,
+    RegisterRequest,
+    AuthResponse,
+    UpdateRequest,
+    DeleteAccountRequest,
+    MessageResponse,
+} from '../models/auth.models';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
@@ -45,6 +52,25 @@ export class AuthService {
 
     getTokenValue(): string | null {
         return this._token();
+    }
+
+    updateProfile(data: UpdateRequest): Observable<AuthResponse | MessageResponse> {
+        return this.http.put<AuthResponse | MessageResponse>('/api/auth/update', data).pipe(
+            tap((response) => {
+                if ('token' in response) {
+                    this.handleAuthSuccess(response as AuthResponse);
+                    if (data.newUsername) {
+                        localStorage.setItem(this.USER_KEY, data.newUsername.trim().toLowerCase());
+                    }
+                }
+            })
+        );
+    }
+
+    deleteAccount(data: DeleteAccountRequest): Observable<MessageResponse> {
+        return this.http.delete<MessageResponse>('/api/auth/delete', { body: data }).pipe(
+            tap(() => this.logout())
+        );
     }
 
     private handleAuthSuccess(response: AuthResponse): void {
