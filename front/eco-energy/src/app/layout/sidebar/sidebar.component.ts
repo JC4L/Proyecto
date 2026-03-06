@@ -16,7 +16,7 @@ interface NavItem {
     <aside class="flex flex-col h-full w-64 dark:bg-bg-dark bg-bg-light text-bg-dark dark:text-white transition-theme">
       <!-- Brand -->
       <div class="flex items-center gap-3 px-6 border-b dark:border-slate-800  border-bg-dark/10 h-16 bg-white dark:bg-surface-dark theme transition-theme">
-        <div class="p-1 bg-primary rounded-lg flex items-center justify-center">
+        <div class="p-1 bg-primary rounded-[12px] flex items-center justify-center">
           <span class="material-symbols-outlined text-bg-dark font-bold text-xl">bolt</span>
         </div>
         <div>
