@@ -22,8 +22,8 @@ import { EmptyStateComponent } from '../../shared/components/empty-state/empty-s
   template: `
     <div class="animate-fade-in">
       <div class="mb-6">
-        <h2 class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Porcentaje de Energía Renovable</h2>
-        <p class="text-slate-500 dark:text-slate-400">Consulta el porcentaje de energía renovable en el consumo eléctrico por región.</p>
+        <h2 class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">% Renovable en Consumo Eléctrico</h2>
+        <p class="text-slate-500 dark:text-slate-400">Porcentaje de energía renovable en el consumo eléctrico por región.</p>
       </div>
 
       <!-- Filters -->

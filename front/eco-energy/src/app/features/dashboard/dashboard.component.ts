@@ -89,7 +89,7 @@ interface LineChartOptions {
       <!-- Page Header -->
       <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
         <div>
-          <h2 class="text-3xl font-black tracking-tight mb-1 text-slate-900 dark:text-white">Panel General</h2>
+          <h2 class="text-3xl font-black tracking-tight mb-1 text-slate-900 dark:text-white">Panel de Control</h2>
           <p class="text-slate-500 dark:text-slate-400">Resumen global de producción y consumo de energías renovables.</p>
         </div>
         <!-- Year Selector -->

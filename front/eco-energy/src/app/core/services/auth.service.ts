@@ -37,7 +37,6 @@ export class AuthService {
     }
 
     register(data: RegisterRequest): Observable<AuthResponse> {
-        localStorage.setItem(this.USER_KEY, data.username.trim());
         return this.http.post<AuthResponse>('/api/auth/register', data).pipe(
             tap((response) => this.handleAuthSuccess(response))
         );
