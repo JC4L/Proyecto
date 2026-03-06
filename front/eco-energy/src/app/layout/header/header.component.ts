@@ -44,7 +44,7 @@ import { UserProfilePanelComponent } from '../../shared/components/user-profile-
           (click)="toggleProfilePanel()"
         >
           <div class="text-right">
-            <p class="text-md font-bold text-slate-900 dark:text-slate-100">{{ userKey }}</p>
+            <p class="text-md font-bold text-slate-900 dark:text-slate-100">{{ userKey() }}</p>
           </div>
           <div class="w-9 h-9 rounded-full bg-primary/20 flex items-center justify-center border-2 border-primary/30">
             <span class="material-symbols-outlined text-primary text-[20px]">person</span>
@@ -74,7 +74,7 @@ export class HeaderComponent {
   private readonly authService = inject(AuthService);
   readonly themeService = inject(ThemeService);
 
-  readonly userKey = localStorage.getItem('eco_energy_user');
+  readonly userKey = this.authService.user;
   readonly profilePanelOpen = signal(false);
 
   /** Emits to parent layout via a callback */
