@@ -21,18 +21,20 @@ import { ThemeService } from "../../core/services/theme.service";
         <section class="mx-auto pt-6">
         <div class="flex justify-center gap-8 flex-wrap">
         <!-- Team Member 1 -->
-          <article class="bg-white dark:bg-slate-900 border border-primary/10 rounded-xl overflow-hidden shadow-sm hover:shadow-md flex flex-col max-w-70 hover:scale-101 hover:-translate-y-2 transition-all group">
-          <div class="w-full h-50 relative">
-          <img alt="Foto de juan" class="w-full h-full object-cover" data-alt="Professional portrait of a male developer" src="./images/juan-perfil/juan-perfil.jpeg"/>
-          <div class="absolute inset-0 bg-linear-to-t from-slate-900/70 to-transparent transition-colors"></div>
+          <article class="bg-white dark:bg-slate-900 border border-primary/10 rounded-xl overflow-hidden shadow-sm hover:shadow-md flex flex-col max-w-60 hover:scale-101 hover:-translate-y-2 transition-all group">
+          <div class="aspect-4/3 w-full relative">
+          <div class="absolute inset-0 bg-blue-400"></div>
+          <img alt="Cat sospechoso" class="w-full h-full object-cover brightness-100 group-hover:hidden" data-alt="Professional portrait of a male developer" src="./images/juan-perfil/cat-risa.png"/>
+          <img alt="Cat calculado" class="w-full h-full object-cover brightness-100 hidden group-hover:block" data-alt="Professional portrait of a male developer" src="./images/juan-perfil/cat-corazon.png"/>
+          <div class="absolute inset-0 bg-linear-to-t from-slate-900/50 to-transparent group-hover:from-slate-900/60 transition-colors"></div>
           <div class="absolute bottom-4 left-4">
           <h3 class="text-white text-md font-bold">Juan Álvarez</h3>
-          <p class="text-blue-400 font-medium text-xs">E-commerce Technical Support Engineer</p>
+          <p class="text-blue-400 font-medium text-xs">Desarrollador Backend</p>
           </div>
           </div>
           <div class="p-4 grow">
           <blockquote class="text-slate-600 dark:text-slate-400 italic text-sm border-l-2 border-blue-400 pl-4">
-              "La distinción entre el presente, pasado y futuro, es sólo una ilusión obstinadamente persistente." - Albert Einstein
+              "De la vida como una película"
           </blockquote>
           </div>
           <div class="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
@@ -51,8 +53,8 @@ import { ThemeService } from "../../core/services/theme.service";
           </article>
 
                   <!-- Team Member 2 -->
-          <article class="bg-white dark:bg-slate-900 border border-primary/10 rounded-xl overflow-hidden shadow-sm hover:shadow-md flex flex-col max-w-70 hover:scale-101 hover:-translate-y-2 transition-all group">
-          <div class="h-50 w-full relative">
+          <article class="bg-white dark:bg-slate-900 border border-primary/10 rounded-xl overflow-hidden shadow-sm hover:shadow-md flex flex-col max-w-60 hover:scale-101 hover:-translate-y-2 transition-all group">
+          <div class="aspect-4/3 w-full relative">
           <div class="absolute inset-0 bg-primary"></div>
           <img alt="Cat sospechoso" class="w-full h-full object-cover brightness-100 group-hover:hidden" data-alt="Professional portrait of a male developer" src="./images/manuel-perfil/cat-sospechoso.png"/>
           <img alt="Cat calculado" class="w-full h-full object-cover brightness-100 hidden group-hover:block" data-alt="Professional portrait of a male developer" src="./images/manuel-perfil/cat-calculado.png"/>
@@ -64,7 +66,7 @@ import { ThemeService } from "../../core/services/theme.service";
           </div>
           <div class="p-4 grow">
           <blockquote class="text-slate-600 dark:text-slate-400 italic text-sm border-l-2 border-primary pl-4">
-              "La verdad es un mal necesario." - Solitario
+              "La verdad es un mal necesario"
           </blockquote>
           </div>
           <div class="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">
@@ -83,18 +85,20 @@ import { ThemeService } from "../../core/services/theme.service";
           </article>
 
                   <!-- Team Member 3 -->
-          <article class="bg-white dark:bg-slate-900 border border-primary/10 rounded-xl overflow-hidden shadow-sm hover:shadow-md flex flex-col max-w-70 hover:scale-101 hover:-translate-y-2 transition-all group">
-          <div class="h-50 w-full relative">
-          <img alt="Foto de santiago" class="w-full h-full object-cover" data-alt="Professional portrait of a male developer" src="./images/santiago-perfil/santiago-perfil.jpeg"/>
-          <div class="absolute inset-0 bg-linear-to-t from-slate-900/70 to-transparent transition-colors"></div>
+          <article class="bg-white dark:bg-slate-900 border border-primary/10 rounded-xl overflow-hidden shadow-sm hover:shadow-md flex flex-col max-w-60 hover:scale-101 hover:-translate-y-2 transition-all group">
+          <div class="aspect-4/3 w-full relative">
+          <div class="absolute inset-0 bg-orange-400"></div>
+          <img alt="Cat sospechoso" class="w-full h-full object-cover brightness-100 group-hover:hidden" data-alt="Professional portrait of a male developer" src="./images/santiago-perfil/cat-opinar.png"/>
+          <img alt="Cat calculado" class="w-full h-full object-cover brightness-100 hidden group-hover:block" data-alt="Professional portrait of a male developer" src="./images/santiago-perfil/cat-viendo.png"/>
+          <div class="absolute inset-0 bg-linear-to-t from-slate-900/50 to-transparent group-hover:from-slate-900/60 transition-colors"></div>
           <div class="absolute bottom-4 left-4">
           <h3 class="text-white text-md font-bold">Santiago Cardoso</h3>
-          <p class="text-orange-400 font-medium text-xs">Soporte servicio TI N2</p>
+          <p class="text-orange-400 font-medium text-xs">Desarrollador Frontend</p>
           </div>
           </div>
           <div class="p-4 grow">
           <blockquote class="text-slate-600 dark:text-slate-400 italic text-sm border-l-2 border-orange-400 pl-4">
-              "La suprema excelencia consiste en romper la resistencia del enemigo." - Sun Tzu, el arte de la guerra
+              "Con la única tregua que me conceden los sueños"
           </blockquote>
           </div>
           <div class="p-4 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800/50">

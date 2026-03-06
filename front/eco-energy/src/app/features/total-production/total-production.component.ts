@@ -34,7 +34,7 @@ import {
   template: `
     <div class="animate-fade-in">
       <div class="mb-6">
-        <h2 class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Producción Total por Tipo de Energía y Año</h2>
+        <h2 class="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Producción Total por Tipo y Año</h2>
         <p class="text-slate-500 dark:text-slate-400">Consulta la producción de energía agrupada por regiones.</p>
       </div>
 
