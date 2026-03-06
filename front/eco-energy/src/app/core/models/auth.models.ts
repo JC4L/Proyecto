@@ -12,3 +12,18 @@ export interface RegisterRequest {
 export interface AuthResponse {
   token: string;
 }
+
+export interface UpdateRequest {
+  newUsername?: string;
+  newEmail?: string;
+  newPassword?: string;
+  password: string;
+}
+
+export interface DeleteAccountRequest {
+  password: string;
+}
+
+export interface MessageResponse {
+  message: string;
+}
