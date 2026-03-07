@@ -129,7 +129,7 @@ interface LineChartOptions {
                 </span>
               }
             </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Producción Total (Top 1)</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Producción Hidraulica Total (Top 10)</p>
             <h3 class="text-2xl font-black text-slate-900 dark:text-white">
               {{ kpiTotalProduction() | number:'1.1-1' }} {{ kpiTotalUnit() }}
             </h3>
@@ -149,7 +149,7 @@ interface LineChartOptions {
                 </span>
               }
             </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Energía Renovable (Top región)</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">Energía Renovable — {{ kpiRenewableRegion() }}</p>
             <h3 class="text-2xl font-black text-slate-900 dark:text-white">
               {{ kpiRenewablePercent() | number:'1.1-1' }}%
             </h3>
@@ -167,7 +167,7 @@ interface LineChartOptions {
                 #1
               </span>
             </div>
-            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">País Líder en Producción</p>
+            <p class="text-sm text-slate-500 dark:text-slate-400 font-medium">País Líder en Producción Hidraulica</p>
             <h3 class="text-2xl font-black text-slate-900 dark:text-white">{{ kpiTopCountry() }}</h3>
             <p class="text-xs text-slate-400 mt-1">
               {{ kpiTopCountryValue() | number:'1.1-1' }} {{ kpiTopCountryUnit() }}
@@ -277,16 +277,13 @@ export class DashboardComponent implements OnInit {
   readonly kpiTotalRegion = computed(() => this.totalProductionData()[0]?.region ?? '—');
 
   readonly kpiRenewablePercent = computed(() => {
-    const participation = this.participationData().find(
-      (p) => p.energySource === 'Share Electricity Renewables'
-    );
-    return participation?.sharePercent ?? 0;
+    const data = this.participationData();
+    if (!data.length) return 0;
+    return data.reduce((sum, p) => sum + (p.sharePercent ?? 0), 0);
   });
   readonly kpiRenewableRegion = computed(() => {
-    const participation = this.participationData().find(
-      (p) => p.energySource === 'Share Electricity Renewables'
-    );
-    return participation?.entity ?? '—';
+    const first = this.participationData()[0];
+    return first?.entity ?? '—';
   });
 
   readonly kpiTopCountry = computed(() => this.topCountriesData()[0]?.country ?? '—');
@@ -352,7 +349,8 @@ export class DashboardComponent implements OnInit {
       },
       grid: { borderColor: this.chartGridColor(), strokeDashArray: 4 },
       title: {
-        text: `Top Países — ${data[0]?.energyType ?? ''} (${this.selectedYear()})`,
+        //text: `Top Países — ${data[0]?.energyType ?? ''} (${this.selectedYear()})`,
+        text: `Top Países — Producción Hidraulica (${this.selectedYear()})`,
         style: { fontSize: '16px', fontWeight: '800', fontFamily: 'Inter', color: this.chartTitleColor() },
       },
     };
