@@ -349,7 +349,6 @@ export class DashboardComponent implements OnInit {
       },
       grid: { borderColor: this.chartGridColor(), strokeDashArray: 4 },
       title: {
-        //text: `Top Países — ${data[0]?.energyType ?? ''} (${this.selectedYear()})`,
         text: `Top Países — Producción Hidraulica (${this.selectedYear()})`,
         style: { fontSize: '16px', fontWeight: '800', fontFamily: 'Inter', color: this.chartTitleColor() },
       },

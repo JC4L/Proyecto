@@ -155,7 +155,11 @@ export class TopCountriesComponent implements OnInit {
   ngOnInit(): void { this.onSearch(); }
 
   onSearch(): void {
-    if (this.filterForm.invalid) return;
+    if (this.filterForm.invalid) {
+      this.data.set([]);
+      this.hasSearched.set(true);
+      return;
+    }
     this.isLoading.set(true);
     this.hasSearched.set(true);
     const { year, energyType, limit } = this.filterForm.getRawValue();

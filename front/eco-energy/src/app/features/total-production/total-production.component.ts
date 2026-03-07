@@ -162,7 +162,11 @@ export class TotalProductionComponent implements OnInit {
   }
 
   onSearch(): void {
-    if (this.filterForm.invalid) return;
+    if (this.filterForm.invalid) {
+      this.data.set([]);
+      this.hasSearched.set(true);
+      return;
+    }
     this.isLoading.set(true);
     this.hasSearched.set(true);
     const { energyType, year, limit } = this.filterForm.getRawValue();
